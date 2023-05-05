@@ -1,0 +1,1 @@
+ln ./zsh-cfg/.zshrc ~/.zshrc
