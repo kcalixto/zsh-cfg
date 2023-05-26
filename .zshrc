@@ -15,3 +15,5 @@ alias gpick="git cherry-pick --no-commit"
 alias glog="git log --oneline"
 alias goinit="go mod init && go mod tidy"
 alias dstop="docker stop \$(docker ps -q)"
+
+GOPATH="C:/Users/kcalixto/go/src"
