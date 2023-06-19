@@ -16,4 +16,6 @@ alias glog="git log --oneline"
 alias goinit="go mod init && go mod tidy"
 alias dstop="docker stop \$(docker ps -q)"
 
-GOPATH="C:/Users/kcalixto/go/src"
+export GO111MODULE=on
+export GOROOT=$HOME/go
+export PATH=$PATH:$GOROOT/bin
