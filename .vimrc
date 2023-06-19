@@ -10,9 +10,6 @@ set wildmenu
 " set minimum lines above and below cursor position
 set scrolloff=10
 
-" hightlight search
-set hlsearch
-
 " line wrapping
 set lbr
 
@@ -22,4 +19,5 @@ set ai
 " smart/auto identation
 set si
 
-" hi!
+" set clipboard to the unnamed register, instead of "+
+set clipboard=unnamed
