@@ -18,6 +18,7 @@ alias goinit="go mod init && go mod tidy"
 alias dstop="docker stop \$(docker ps -q)"
 alias dps="docker ps --format 'table {{.Names}}\t{{.Status}}'"
 
+export GOPATH=$HOME/go
 export GO111MODULE=on
 export PATH=$PATH:$GOROOT/bin
 
