@@ -19,5 +19,8 @@ set ai
 " smart/auto identation
 set si
 
+" no wrap...
+set nowrap
+
 " set clipboard to the unnamed register, instead of "+
 set clipboard=unnamed
