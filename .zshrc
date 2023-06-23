@@ -17,5 +17,10 @@ alias goinit="go mod init && go mod tidy"
 alias dstop="docker stop \$(docker ps -q)"
 
 export GO111MODULE=on
-export GOROOT=$HOME/go
 export PATH=$PATH:$GOROOT/bin
+
+# node version mannager
+# install nvm cmd: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
