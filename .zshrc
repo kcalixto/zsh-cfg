@@ -14,7 +14,9 @@ alias gapply="git stash apply"
 alias gpick="git cherry-pick --no-commit"
 alias glog="git log --oneline"
 alias goinit="go mod init && go mod tidy"
+# Docker
 alias dstop="docker stop \$(docker ps -q)"
+alias dps="docker ps --format 'table {{.Names}}\t{{.Status}}'"
 
 export GO111MODULE=on
 export PATH=$PATH:$GOROOT/bin
