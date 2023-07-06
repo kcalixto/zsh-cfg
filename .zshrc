@@ -18,10 +18,6 @@ alias goinit="go mod init && go mod tidy"
 alias dstop="docker stop \$(docker ps -q)"
 alias dps="docker ps --format 'table {{.Names}}\t{{.Status}}'"
 
-export GOPATH=$HOME/go
-export GO111MODULE=on
-export PATH=$PATH:$GOROOT/bin
-
 # node version mannager
 # install nvm cmd: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
