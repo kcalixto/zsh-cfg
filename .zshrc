@@ -4,6 +4,7 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+alias src="source ~/.zshrc"
 alias caws="code ~/.aws/credentials"
 alias gr1="git reset --soft HEAD~1"
 alias gh="git reset --hard"
