@@ -15,9 +15,11 @@ alias gapply="git stash apply"
 alias gpick="git cherry-pick --no-commit"
 alias glog="git log --oneline"
 alias goinit="go mod init && go mod tidy"
+
 # Docker
 alias dstop="docker stop \$(docker ps -q)"
 alias dps="docker ps --format 'table {{.Names}}\t{{.Status}}'"
+alias new_mysql_docker="docker run --name mysql -e MYSQL_ROOT_PASSWORD=secret -d mysql:5.7"
 
 # node version mannager
 # install nvm cmd: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
