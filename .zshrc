@@ -30,3 +30,5 @@ export NVM_DIR="$HOME/.nvm"
 # java - brew install openjdk
 export JAVA_HOME=/usr/local/opt/openjdk
 
+# PATH
+export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$JAVA_HOME/bin
