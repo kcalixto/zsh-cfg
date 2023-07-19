@@ -21,6 +21,22 @@ alias dstop="docker stop \$(docker ps -q)"
 alias dps="docker ps --format 'table {{.Names}}\t{{.Status}}'"
 alias new_mysql_docker="docker run --name mysql -e MYSQL_ROOT_PASSWORD=secret -d mysql:5.7"
 
+# Obsidian Vault
+obsidian() {
+    local action=$1
+    local target=$2
+
+    if [[ $action == "push" ]]; then
+        if [[ $target == "-a" ]]; then
+            cd ~/Documents/obsidian && git commit -am "auto commit all" && git push
+        else
+            echo "no target specified. Use '-a' to push all"
+        fi
+    else
+        echo "no action specified. Use 'push' to push to remote repo"
+    fi
+}
+
 # node version mannager
 # install nvm cmd: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
@@ -30,5 +46,6 @@ export NVM_DIR="$HOME/.nvm"
 # java - brew install openjdk
 export JAVA_HOME=/usr/local/opt/openjdk
 
+export GOPATH=$HOME/go
 # PATH
 export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$JAVA_HOME/bin
