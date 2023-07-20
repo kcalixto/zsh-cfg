@@ -24,3 +24,6 @@ set nowrap
 
 " set clipboard to the unnamed register, instead of "+
 set clipboard=unnamed
+
+" set default ident to 4 spaces
+set tabstop=4
