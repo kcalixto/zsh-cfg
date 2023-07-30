@@ -93,4 +93,4 @@ export JAVA_HOME=/usr/local/opt/openjdk
 
 export GOPATH=$HOME/go
 # PATH
-export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$JAVA_HOME/bin
+export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:~/go/bin:/usr/sbin:/sbin:$JAVA_HOME/bin
