@@ -32,3 +32,6 @@ export CHECK="\xE2\x9C\x85"
 && brew install vim \
     && echo -e "\n $CHECK vim installed" \
 
+# gh cli tool
+&& brew install gh \
+    && echo -e "\n $CHECK gh installed" \
