@@ -9,6 +9,7 @@ alias caws="code ~/.aws/credentials"
 alias gr1="git reset --soft HEAD~1"
 alias gmain="git checkout main && git pull"
 alias gnext="git checkout next && git pull"
+alias gdev="git checkout development && git pull"
 alias gstash="git stash save -u"
 alias gapply="git stash apply"
 alias gpick="git cherry-pick --no-commit"
@@ -110,3 +111,10 @@ export JAVA_HOME=/usr/local/opt/openjdk
 export GOPATH=$HOME/go
 # PATH
 export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:~/go/bin:/usr/sbin:/sbin:$JAVA_HOME/bin
+
+# bun completions
+[ -s "/Users/kcalixto/.bun/_bun" ] && source "/Users/kcalixto/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
