@@ -110,7 +110,7 @@ export JAVA_HOME=/usr/local/opt/openjdk
 
 export GOPATH=$HOME/go
 # PATH
-export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:~/go/bin:/usr/sbin:/sbin:$JAVA_HOME/bin
+export PATH=$PATH:/bin:$GOPATH/bin:$JAVA_HOME/bin:/home/linuxbrew/.linuxbrew/bin
 
 # bun completions
 [ -s "/Users/kcalixto/.bun/_bun" ] && source "/Users/kcalixto/.bun/_bun"
