@@ -12,17 +12,11 @@ export CHECK="\xE2\x9C\x85"
 && chsh -s /bin/zsh \
     && echo -e "\n $CHECK zsh set as default shell" \
 
-# installs love of my life
+# java
 && brew install openjdk \
     && export JAVA_HOME=$(/usr/libexec/java_home -v 11) \
     && export PATH=$JAVA_HOME/bin:$PATH \
     && echo -e "\n $CHECK  java installed" \
-
-# installs what i use to make money
-&& brew install go \
-    && export GOPATH=$HOME/go \
-    && export PATH=$PATH:$GOPATH/bin \
-    && echo -e "\n $CHECK go installed" \
 
 # node version mannager
 && brew install nvm \
@@ -35,3 +29,12 @@ export CHECK="\xE2\x9C\x85"
 # gh cli tool
 && brew install gh \
     && echo -e "\n $CHECK gh installed" \
+
+# go version mannager
+&& bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer) \
+    && source /Users/kcalixto/.gvm/scripts/gvm \
+    && gvm install go1.19 \
+    && gvm use go1.19 --default \
+    && export GOPATH=$HOME/go \
+    && export PATH=$PATH:$GOPATH/bin \    
+    && echo -e "\n $CHECK go installed" \
