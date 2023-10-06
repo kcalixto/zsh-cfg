@@ -81,16 +81,17 @@ poc() {
     echo -e "\xE2\x9C\x85 done!"
 }
 
+# java - brew install openjdk
+# export JAVA_HOME=/usr/local/opt/openjdk  // TESTE
+
 # node version mannager
-# install nvm cmd: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+# install nvm cmd: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# java - brew install openjdk
-export JAVA_HOME=/usr/local/opt/openjdk
-
 export GOPATH=$HOME/go
+
 # PATH
 export PATH=$PATH:/usr/local/bin
 export PATH=$PATH:/usr/bin
@@ -98,6 +99,7 @@ export PATH=$PATH:/bin
 export PATH=$PATH:~/go/bin
 export PATH=$PATH:/usr/sbin
 export PATH=$PATH:/sbin
+# export PATH=$PATH:$JAVA_HOME/bin // TESTE
 
 # bun completions
 [ -s "/Users/kcalixto/.bun/_bun" ] && source "/Users/kcalixto/.bun/_bun"
@@ -105,3 +107,16 @@ export PATH=$PATH:/sbin
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+
+# react native development
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/10.0/bin
+
+
