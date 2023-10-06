@@ -122,6 +122,6 @@ export PATH=$PATH:$ANDROID_HOME/cmdline-tools/10.0/bin
 
 # go version mannager
 # gvm use go1.19 --default
+[[ -s "/Users/kcalixto/.gvm/scripts/gvm" ]] && source "/Users/kcalixto/.gvm/scripts/gvm"
 
 echo "🤖  Load .zshrc"
-[[ -s "/Users/kcalixto/.gvm/scripts/gvm" ]] && source "/Users/kcalixto/.gvm/scripts/gvm"
