@@ -90,8 +90,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export GOPATH=$HOME/go
-
 # PATH
 export PATH=$PATH:/usr/local/bin
 export PATH=$PATH:/usr/bin
@@ -123,5 +121,6 @@ export PATH=$PATH:$ANDROID_HOME/cmdline-tools/10.0/bin
 # go version mannager
 # gvm use go1.19 --default
 [[ -s "/Users/kcalixto/.gvm/scripts/gvm" ]] && source "/Users/kcalixto/.gvm/scripts/gvm"
+export GOPATH=$GOPATH:$HOME/go/bin
 
 echo "🤖  Load .zshrc"
