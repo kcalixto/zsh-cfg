@@ -100,7 +100,7 @@ export PATH=$PATH:/sbin
 # export PATH=$PATH:$JAVA_HOME/bin // TESTE
 
 # bun completions
-[ -s "/Users/kcalixto/.bun/_bun" ] && source "/Users/kcalixto/.bun/_bun"
+[ -s "/Users/kaua.calixto/.bun/_bun" ] && source "/Users/kaua.calixto/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -120,7 +120,7 @@ export PATH=$PATH:$ANDROID_HOME/cmdline-tools/10.0/bin
 
 # go version mannager
 # gvm use go1.19 --default
-[[ -s "/Users/kcalixto/.gvm/scripts/gvm" ]] && source "/Users/kcalixto/.gvm/scripts/gvm"
+[[ -s "/Users/kaua.calixto/.gvm/scripts/gvm" ]] && source "/Users/kaua.calixto/.gvm/scripts/gvm"
 export GOPATH=$GOPATH:$HOME/go/bin
 
 echo "🤖  Load .zshrc"
