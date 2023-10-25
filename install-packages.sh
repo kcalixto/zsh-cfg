@@ -13,7 +13,7 @@ export CHECK="\xE2\x9C\x85"
     && echo -e "\n $CHECK zsh set as default shell" \
 
 # packages
-&& brew install openjdk nvm vim gh colima docker \
+&& brew install openjdk nvm vim gh colima docker awscli aws-sam-cli \
 && brew install --cask mysqlworkbench firefox postman visual-studio-code warp zulu11 \
 && echo -e "\n $CHECK packages installed" \
 
