@@ -17,8 +17,16 @@ export CHECK="\xE2\x9C\x85"
 && brew install --cask mysqlworkbench firefox postman visual-studio-code warp zulu11 \
 && echo -e "\n $CHECK packages installed" \
 
+# node version mannager
+&& nvm install node \
+&& nvm use node \
+
 # go version mannager
 && bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer) \
 && source /Users/kcalixto/.gvm/scripts/gvm \
 && gvm install go1.19 \
-&& gvm use go1.19 --default
+&& gvm use go1.19 --default \
+
+# node packages
+&& source ~/.zshrc \
+&& npm install -g yarn serverless bun
