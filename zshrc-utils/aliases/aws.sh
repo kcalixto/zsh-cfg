@@ -1,0 +1,1 @@
+alias caws="code ~/.aws/credentials"
