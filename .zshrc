@@ -7,6 +7,9 @@ source $ZSH/oh-my-zsh.sh
 alias src="source ~/.zshrc"
 alias caws="code ~/.aws/credentials"
 alias gr1="git reset --soft HEAD~1"
+alias gtag="git describe --abbrev=0 --tags"
+alias gcb="git checkout -b "
+alias gc="git checkout "
 alias gmain="git checkout main && git pull"
 alias gnext="git checkout next && git pull"
 alias gdev="git checkout development && git pull"
@@ -121,6 +124,6 @@ export PATH=$PATH:$ANDROID_HOME/cmdline-tools/10.0/bin
 # go version mannager
 # gvm use go1.19 --default
 [[ -s "/Users/kaua.calixto/.gvm/scripts/gvm" ]] && source "/Users/kaua.calixto/.gvm/scripts/gvm"
-export GOPATH=$GOPATH:$HOME/go/bin
+export GOPATH=$GOPATH:$HOME/go
 
 echo "🤖  Load .zshrc"
