@@ -1,32 +1,21 @@
-export CHECK="\xE2\x9C\x85"
+# install zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+    && echo -e "\n $CHECK zsh installed!" \
 
-# installs homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
-    && echo -e "\n $CHECK homebrew installed" \
-
-# zsh
-&& sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
-    && echo -e "\n $CHECK zsh installed" \
+&& sleep 5 \
 
 # set zsh as default shell
 && chsh -s /bin/zsh \
-    && echo -e "\n $CHECK zsh set as default shell" \
+    && echo -e "\n $CHECK zsh set as default shell!" \
 
-# packages
-&& brew install openjdk nvm vim gh colima docker awscli aws-sam-cli \
-&& brew install --cask mysqlworkbench firefox postman visual-studio-code warp zulu11 \
-&& echo -e "\n $CHECK packages installed" \
+&& sleep 5 \
 
-# node version mannager
-&& nvm install node \
-&& nvm use node \
+&& /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
+    && echo -e "\n $CHECK homebrew installed!"
 
-# go version mannager
-&& bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer) \
-&& source /Users/kcalixto/.gvm/scripts/gvm \
-&& gvm install go1.19 \
-&& gvm use go1.19 --default \
+base_folder="./packages-install"
+find "$base_folder" -type f -name "*.sh" | while read -r script; do
+    source "$script"
+done
 
-# node packages
-&& source ~/.zshrc \
-&& npm install -g yarn serverless bun
+echo "done installing packages!"
