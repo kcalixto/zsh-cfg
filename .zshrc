@@ -1,4 +1,7 @@
 export ZSH="$HOME/.oh-my-zsh"
+# this repo location in your machine :)
+export ZSH_CFG_HOME="$HOME/go/src/zsh-cfg"
+
 ZSH_THEME="robbyrussell"
 plugins=(git web-search)
 source $ZSH/oh-my-zsh.sh
