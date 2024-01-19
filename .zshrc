@@ -11,9 +11,9 @@ find "$base_folder" -type f -name "*.sh" | while read -r script; do
     source "$script"
 done
 
-echo "🤖  Loaded .zshrc"
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/kaua.calixto/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/kaua.calixto/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+base_folder="$HOME/go/src/zsh-cfg/scripts"
+find "$base_folder" -type f -name "*.sh" | while read -r script; do
+    source "$script"
+done
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/kaua.calixto/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/kaua.calixto/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+echo "🤖  Loaded .zshrc"
