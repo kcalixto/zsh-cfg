@@ -1,4 +1,5 @@
 alias gr1="git reset --soft HEAD~1"
+alias grh="git reset --hard"
 alias gtag="git describe --abbrev=0 --tags"
 alias gcb="git checkout -b "
 alias gc="git checkout "

@@ -34,4 +34,7 @@ aws_logs() {
     fi
 }
 
+# oh my posh
+eval "$(oh-my-posh init zsh --config '/Users/kaua.calixto/go/src/zsh-cfg/oh-my-posh/config.omp.json')"
+
 echo "🤖  Loaded .zshrc"
