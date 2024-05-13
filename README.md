@@ -1,4 +1,5 @@
 <!-- tools -->
+ln .alacritty.toml ~/.alacritty.toml
 ln .zshrc ~/.zshrc
 ln .vimrc ~/.vimrc
 
