@@ -4,6 +4,7 @@
 
 export GOROOT=/Users/kaua.calixto/.gvm/gos/go1.19
 export GOROOT_BOOTSTRAP=$GOROOT
+export GOPRIVATE=github.com # don't forget to add ssh over https in .gitconfig
 
 export GOPATH=$HOME/go/src
 
