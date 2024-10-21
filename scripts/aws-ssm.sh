@@ -26,7 +26,7 @@ aws_ssm_find() {
     fi
 
     value=$(aws ssm get-parameter --name "$name" --query 'Parameter.Value' --output text --with-decryption --region $AWS_REGION)
-    echo "$name\n\n$value"
+    echo "$value"
 }
 
 aws_ssm_delete() {
