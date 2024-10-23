@@ -35,6 +35,9 @@ obsidian() {
             git reset --soft HEAD~1
             git push --force
         ;;
+        "ping")
+            echo "pong"
+        ;;
         *)
         echo -e "\xE2\x9D\x8C no action specified. Use 'push' to push to remote repo or 'reset' to undo last commit"
         ;;
