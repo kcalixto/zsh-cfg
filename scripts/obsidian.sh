@@ -4,7 +4,7 @@ obsidian() {
     local action=$1
     local target=$2
 
-    export OBSIDIAN_PATH=~/Documents/obsidian
+    export OBSIDIAN_PATH=~/go/src/obsidian-vault
     export VAULT_NAME=main-vault
 
     case $action in
