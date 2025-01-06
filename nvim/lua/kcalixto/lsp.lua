@@ -1,28 +1,14 @@
 local lsp = vim.lsp
-
-require('mason').setup()
-require('mason-lspconfig').setup({
-  ensure_installed = {
-    'cspell',
-    'eslint-lsp',
-    'gopls',
-    'html-lsp',
-    'json-lsp',
-    'lua-language-server',
-    'prettier',
-    'rust-analyzer',
-    'tailwindcss-language-server',
-    'ts-standard',
-    'typescript-language-server',
-  }
-})
-
+local mason = require('mason')
+local masonlspconfig = require('mason-lspconfig')
 local lspconfig = require('lspconfig')
 
-require('mason-lspconfig').setup_handlers({
+mason.setup()
+
+masonlspconfig.setup_handlers({
   function(server_name)
     lspconfig[server_name].setup({
-      capabilities = lsp_capabilities,
+      capabilities = require('cmp_nvim_lsp').default_capabilities(),
     })
   end,
 })
@@ -33,3 +19,4 @@ lsp.handlers["textDocument/hover"] = lsp.with(
     width = 100
   }
 )
+

@@ -8,6 +8,7 @@ local ns = { noremap = true, silent = true }
 -- imports
 require('kcalixto.lazy')
 require('kcalixto.cmp')
+require('kcalixto.snipetts')
 require('kcalixto.lsp')
 require('kcalixto.colorscheme')
 -- idk where to group
@@ -39,9 +40,25 @@ opt.shellcmdflag = "-i -c" -- -i interative, -c ensures the shell runs the provi
 -- undo history
 vim.o.undofile = true
 -- avoid all the |hit-enter| prompts caused by file
-opt.shortmess:append { c = true, A = true }
+opt.shortmess:append { A = true }
 --
 opt.fillchars = { eob = " " }
+-- diagnostic 
+vim.diagnostic.config({
+  float = {
+    source = 'if_many',
+    scope = "cursor",
+  },
+})
+vim.keymap.set("n", "$<leader>d", function()
+  vim.diagnostic.open_float(nil, { focus = true })
+end, { desc = "Show diagnostics in a floating window" })
+
+vim.api.nvim_create_user_command("GoGenerate", function()
+  local cwd = vim.fn.expand("%:p:h")
+  vim.fn.system("cd " .. cwd .. " && go generate")
+  vim.notify("go generate executed", vim.log.levels.INFO)
+end, { desc = "Run go generate" })
 
 -- keymaps
 keymap.set("n", "<space><space>x", "<cmd>source %<CR>", ns)
@@ -82,15 +99,6 @@ keymap.set('n', '<space>st', function()
   vim.cmd.wincmd('J')
   vim.api.nvim_win_set_height(0, 5)
 end, ns)
---
-vim.keymap.set('n', '<space>ss',
-  function()
-    vim.lsp.buf.format()
-    vim.cmd('w')
-    vim.notify('File saved successfully', vim.log.levels.INFO)
-  end,
-  { desc = "Format and save the file" }
-)
 --
 keymap.set('n', '<space>r', function()
   vim.cmd('LspRestart')

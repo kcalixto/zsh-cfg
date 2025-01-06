@@ -3,6 +3,21 @@ return {
     'williamboman/mason.nvim',
     enabled = true,
     build = ':MasonUpdate',
+    opts = {
+      ensure_installed = {
+        'gopls',
+        'cspell',
+        'eslint-lsp',
+        'html-lsp',
+        'json-lsp',
+        'lua-language-server',
+        'prettier',
+        'rust-analyzer',
+        'tailwindcss-language-server',
+        'ts-standard',
+        'typescript-language-server',
+    },
+  },
   },
   {
     'williamboman/mason-lspconfig.nvim',
@@ -11,7 +26,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      'saghen/blink.cmp',
       {
         "folke/lazydev.nvim",
         ft = "lua",
@@ -24,9 +38,33 @@ return {
       },
     },
     config = function()
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
-      require('lspconfig').lua_ls.setup({
-        capabilities = capabilities
+      local lspconfig = require('lspconfig')
+      lspconfig .gopls.setup({
+        on_attach = require('mason-lspconfig').on_attach,
+        capabilities = require('cmp_nvim_lsp').default_capabilities(),
+        root_dir = require('lspconfig/util').root_pattern('go.work', 'go.mod', '.git'),
+        cmd = { 'gopls'} ,
+        filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+        settings = {
+          gopls = {
+            completeUnimported = true,
+            analyses = {
+              unusedparams = true,
+            },
+            staticcheck = true,
+          },
+        },
+      })
+
+      lspconfig.lua_ls.setup({
+          capabilities = require('cmp_nvim_lsp').default_capabilities(),
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { 'vim' }
+            }
+          },
+        }
       })
 
       -- vim.api.nvim_create_autocmd('LspAttach', {
