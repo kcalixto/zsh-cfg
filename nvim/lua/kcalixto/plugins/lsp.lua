@@ -16,34 +16,45 @@ return {
         'tailwindcss-language-server',
         'ts-standard',
         'typescript-language-server',
+      },
     },
-  },
   },
   {
     'williamboman/mason-lspconfig.nvim',
-    enabled = true,
-  },
-  {
-    "neovim/nvim-lspconfig",
     dependencies = {
       {
-        "folke/lazydev.nvim",
-        ft = "lua",
-        opts = {
-          library = {
-            -- informs to lua that vim is a global variable that exists!
-            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        "neovim/nvim-lspconfig",
+        dependencies = {
+          {
+            "folke/lazydev.nvim",
+            ft = "lua",
+            opts = {
+              library = {
+                -- informs to lua that vim is a global variable that exists!
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+              },
+            },
           },
         },
       },
     },
-    config = function()
+    config = function ()
       local lspconfig = require('lspconfig')
-      lspconfig .gopls.setup({
+      local masonlspconfig = require('mason-lspconfig')
+
+      masonlspconfig.setup_handlers({
+        function(server_name)
+          lspconfig[server_name].setup({
+            capabilities = require('cmp_nvim_lsp').default_capabilities(),
+          })
+        end,
+      })
+
+      lspconfig.gopls.setup({
         on_attach = require('mason-lspconfig').on_attach,
         capabilities = require('cmp_nvim_lsp').default_capabilities(),
         root_dir = require('lspconfig/util').root_pattern('go.work', 'go.mod', '.git'),
-        cmd = { 'gopls'} ,
+        cmd = { 'gopls' },
         filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
         settings = {
           gopls = {
@@ -57,7 +68,7 @@ return {
       })
 
       lspconfig.lua_ls.setup({
-          capabilities = require('cmp_nvim_lsp').default_capabilities(),
+        capabilities = require('cmp_nvim_lsp').default_capabilities(),
         settings = {
           Lua = {
             diagnostics = {
@@ -66,23 +77,6 @@ return {
           },
         }
       })
-
-      -- vim.api.nvim_create_autocmd('LspAttach', {
-      --   callback = function(args)
-      --     local client = vim.lsp.get_client_by_id(args.data.client_id)
-      --     if not client then return end
-      --
-      --     if client:supports_method('textDocument/formatting') then
-      --       -- Format the current buffer on save
-      --       vim.api.nvim_create_autocmd('BufWritePre', {
-      --         buffer = args.buf,
-      --         callback = function()
-      --           vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-      --         end,
-      --       })
-      --     end
-      --   end,
-      -- })
     end
   },
 }

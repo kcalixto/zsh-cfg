@@ -7,7 +7,7 @@ local keymap = vim.keymap
 local ns = { noremap = true, silent = true }
 -- imports
 require('kcalixto.lazy')
-require('kcalixto.cmp')
+require('kcalixto.completion')
 require('kcalixto.snipetts')
 require('kcalixto.lsp')
 require('kcalixto.colorscheme')
