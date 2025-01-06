@@ -1,14 +1,29 @@
-aws_ssm_create() {
+aws_ssm_put() {
     AWS_REGION="sa-east-1"
     if [ -z "$1" ] || [ -z "$2" ]; then
-        echo "Please provide the ssm name and value. Example: aws_ssm_create /some/name my_value"
+        echo "Please provide the ssm name and value. Example: aws_ssm_put /some/name my_value"
         exit 1
     fi
 
     name="$1"
     value="$2"
+    currvalue=$(aws ssm get-parameter --name "$name" --query 'Parameter.Value' --output text --with-decryption --region $AWS_REGION)
 
-    if aws ssm get-parameter --name "$name" --region $AWS_REGION &> /dev/null; then
+    if [ -n "$currvalue" ]; then
+        # checks if the parameter already exists and contains the same value
+        if [ "$currvalue" = "$value" ]; then
+            echo "Parameter $name already contains the value \"$value\"."
+            return 0
+        fi
+
+        # shows confirmation message
+        echo -e "Are you sure you want to update the parameter $name?\n\"$currvalue\" -> \"$value\"? (y/n)"
+        read -r confirm
+        if [ "$confirm" != "y" ]; then
+            echo "Operation canceled."
+            return 0
+        fi
+
         aws ssm put-parameter --name "$name" --value "$value" --type "SecureString" --overwrite --region $AWS_REGION > /dev/null
         echo "Parameter $name updated."
     else
