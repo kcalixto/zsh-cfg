@@ -16,6 +16,7 @@ opt.clipboard = 'unnamedplus'
 opt.wrap = false
 opt.number = true
 opt.relativenumber = true
+opt.scrolloff = 9999
 -- tabs & spacing
 opt.tabstop = 4
 opt.expandtab = true
@@ -35,8 +36,10 @@ opt.iskeyword:append("-") -- makes vim take dash as part of the word!!
 -- set shell
 opt.shell = "zsh"
 opt.shellcmdflag = "-i -c" -- -i interative, -c ensures the shell runs the provided command
---
-opt.shortmess:append { c = true }
+-- undo history
+vim.o.undofile = true
+-- avoid all the |hit-enter| prompts caused by file
+opt.shortmess:append { c = true, A = true }
 --
 opt.fillchars = { eob = " " }
 
@@ -57,11 +60,12 @@ keymap.set('n', '<C-W><C-l>', ':vertical resize +15<CR>', ns)  -- increment wind
 keymap.set('n', '<C-W><C-h>', ':vertical resize -15<CR>', ns)  -- decrement window size
 keymap.set('n', '<C-W><C-j>', ':horizontal resize +5<CR>', ns) -- increment window size
 keymap.set('n', '<C-W><C-k>', ':horizontal resize -5<CR>', ns) -- decrement window size
---
+-- tabs (dont tell anyone i'm using it)
 keymap.set("n", "<leader>to", ":tabnew<CR>", ns)               -- open new tab
 keymap.set("n", "<leader>tx", ":tabclose<CR>", ns)             -- close current tab
 keymap.set("n", "<leader>tn", ":tabn<CR>", ns)                 -- go to next tab
 keymap.set("n", "<leader>tp", ":tabp<CR>", ns)                 -- go to previous tab
+keymap.set("n", "<leader>tt", ":tabedit %<CR>", ns)            -- opens current buffer in another tab (kinda temp fullscreen hack)
 --
 keymap.set('n', '<Leader><CR>', ':noh<CR>', ns)                -- Clear highlight
 --
@@ -78,6 +82,20 @@ keymap.set('n', '<space>st', function()
   vim.cmd.wincmd('J')
   vim.api.nvim_win_set_height(0, 5)
 end, ns)
+--
+vim.keymap.set('n', '<space>ss',
+  function()
+    vim.lsp.buf.format()
+    vim.cmd('w')
+    vim.notify('File saved successfully', vim.log.levels.INFO)
+  end,
+  { desc = "Format and save the file" }
+)
+--
+keymap.set('n', '<space>r', function()
+  vim.cmd('LspRestart')
+  vim.notify('lsp restarted', vim.log.levels.INFO)
+end, ns)
 
 --
 -- loadfms keybindings
@@ -85,10 +103,10 @@ end, ns)
 -- keymap('n', '<Leader>bd', ':bd<CR>', ns)                                    -- Close buffer
 -- keymap("n", "<A-TAB>", "<C-^>", ns)
 -- keymap('n', 'Q', '<Nop>', ns)                                               -- Disable ex mode. I dunno what is it
--- keymap('', ']b', ':bnext<CR>', ns)
--- keymap('', '[b', ':bprevious<CR>', ns)
--- keymap('', ']q', ':cnext<CR>', ns)
--- keymap('', '[q', ':cprevious<CR>', ns)
+keymap.set('', ']b', ':bnext<CR>', ns)
+keymap.set('', '[b', ':bprevious<CR>', ns)
+keymap.set('', ']c', ':cnext<CR>', ns)
+keymap.set('', '[c', ':cprevious<CR>', ns)
 
 -- keymap('n', '<Leader>dq', '<C-W>k <C-W>o', ns)    -- Close compare buffs
 -- keymap('n', '<Leader>da', ':diffget //2<CR>', ns) -- Get content from left side
