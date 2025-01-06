@@ -5,7 +5,8 @@ export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CFG_HOME="$HOME/go/src/zsh-cfg"
 
 ZSH_THEME="robbyrussell"
-plugins=(git web-search)
+# ZSH_THEME="powerlevel10k/powerlevel10k"
+plugins=(git web-search zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 base_folder="$HOME/go/src/zsh-cfg/zshrc-utils"
@@ -38,3 +39,4 @@ aws_logs() {
 # eval "$(oh-my-posh init zsh --config '/Users/kaua.calixto/go/src/zsh-cfg/oh-my-posh/config.omp.json')"
 
 echo "🤖  Loaded .zshrc"
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
