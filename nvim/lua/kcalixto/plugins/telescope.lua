@@ -22,14 +22,6 @@ return {
           cwd = vim.fn.getcwd(),
         })
       end)
-      -- opens telescope in .config folder
-      vim.keymap.set('n', '<space>en',
-        function()
-          require('telescope.builtin').find_files {
-            cwd = vim.fn.stdpath('config')
-          }
-        end
-      )
 
       -- multigrep custom feature
       require("kcalixto.plugins.telescope.multigrep").setup()

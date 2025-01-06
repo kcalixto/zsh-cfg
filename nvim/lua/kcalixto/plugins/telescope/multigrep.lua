@@ -55,6 +55,12 @@ end
 
 M.setup = function()
   vim.keymap.set('n', '<space>fg', live_multigrep)
+  -- opens grep in .config/nvim folder
+  vim.keymap.set('n', '<space>fn', function()
+    live_multigrep({
+      cwd = vim.fn.stdpath('config')
+    })
+  end)
 end
 
 return M
