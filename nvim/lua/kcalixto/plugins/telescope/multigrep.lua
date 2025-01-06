@@ -28,6 +28,10 @@ local live_multigrep = function(opts)
         table.insert(args, pieces[2])
       end
 
+      -- force ignore lock files
+      table.insert(args, '-g')
+      table.insert(args, '!*-lock.json')
+
       return vim.tbl_flatten {
         args,
         {
