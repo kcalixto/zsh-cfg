@@ -3,12 +3,17 @@ local lsp = vim.lsp
 require('mason').setup()
 require('mason-lspconfig').setup({
   ensure_installed = {
+    'cspell',
+    'eslint-lsp',
     'gopls',
-    'html',
-    'jsonls',
-    'lua_ls',
-    'tailwindcss',
-    -- 'cspell', -- not working idk why
+    'html-lsp',
+    'json-lsp',
+    'lua-language-server',
+    'prettier',
+    'rust-analyzer',
+    'tailwindcss-language-server',
+    'ts-standard',
+    'typescript-language-server',
   }
 })
 
@@ -17,7 +22,7 @@ local lspconfig = require('lspconfig')
 require('mason-lspconfig').setup_handlers({
   function(server_name)
     lspconfig[server_name].setup({
-      -- capabilities = lsp_capabilities,
+      capabilities = lsp_capabilities,
     })
   end,
 })
