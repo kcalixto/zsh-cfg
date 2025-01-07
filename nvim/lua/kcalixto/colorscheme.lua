@@ -1,2 +1,4 @@
-vim.cmd.colorscheme 'tokyonight'
-vim.cmd "hi Normal ctermbg=NONE guibg=NONE"
+vim.cmd.colorscheme 'github_dark_default'
+-- vim.cmd [[
+--   highlight TreeSitterContext guibg=NONE ctermbg=NONE
+-- ]]
