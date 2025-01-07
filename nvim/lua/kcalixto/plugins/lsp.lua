@@ -38,7 +38,7 @@ return {
         },
       },
     },
-    config = function ()
+    config = function()
       local lspconfig = require('lspconfig')
       local masonlspconfig = require('mason-lspconfig')
 

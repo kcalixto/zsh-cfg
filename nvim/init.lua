@@ -17,7 +17,7 @@ opt.clipboard = 'unnamedplus'
 opt.wrap = false
 opt.number = true
 opt.relativenumber = true
-opt.scrolloff = 9999
+opt.scrolloff = 10
 -- tabs & spacing
 opt.tabstop = 4
 opt.expandtab = true
@@ -43,21 +43,21 @@ vim.o.undofile = true
 opt.shortmess:append { A = true }
 --
 opt.fillchars = { eob = " " }
--- diagnostic 
+-- diagnostic
 vim.diagnostic.config({
-  float = {
-    source = 'if_many',
-    scope = "cursor",
-  },
+    float = {
+        source = 'if_many',
+        scope = "cursor",
+    },
 })
 vim.keymap.set("n", "$<leader>d", function()
-  vim.diagnostic.open_float(nil, { focus = true })
+    vim.diagnostic.open_float(nil, { focus = true })
 end, { desc = "Show diagnostics in a floating window" })
 
 vim.api.nvim_create_user_command("GoGenerate", function()
-  local cwd = vim.fn.expand("%:p:h")
-  vim.fn.system("cd " .. cwd .. " && go generate")
-  vim.notify("go generate executed", vim.log.levels.INFO)
+    local cwd = vim.fn.expand("%:p:h")
+    vim.fn.system("cd " .. cwd .. " && go generate")
+    vim.notify("go generate executed", vim.log.levels.INFO)
 end, { desc = "Run go generate" })
 
 -- keymaps
@@ -94,16 +94,18 @@ keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', ns)
 keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', ns)
 --
 keymap.set('n', '<space>st', function()
-  vim.cmd.vnew()
-  vim.cmd.term()
-  vim.cmd.wincmd('J')
-  vim.api.nvim_win_set_height(0, 5)
+    vim.cmd.vnew()
+    vim.cmd.term()
+    vim.cmd.wincmd('J')
+    vim.api.nvim_win_set_height(0, 5)
 end, ns)
 --
 keymap.set('n', '<space>r', function()
-  vim.cmd('LspRestart')
-  vim.notify('lsp restarted', vim.log.levels.INFO)
+    vim.cmd('LspRestart')
+    vim.notify('lsp restarted', vim.log.levels.INFO)
 end, ns)
+--
+keymap.set('n', '<space><space><space>', 'o<esc>30i<CR><esc>', ns)
 
 --
 -- loadfms keybindings
