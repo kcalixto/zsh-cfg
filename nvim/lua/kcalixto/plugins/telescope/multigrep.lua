@@ -57,14 +57,6 @@ local live_multigrep = function(opts)
   }):find()
 end
 
-M.setup = function()
-  vim.keymap.set('n', '<space>fg', live_multigrep)
-  -- opens grep in .config/nvim folder
-  vim.keymap.set('n', '<space>fn', function()
-    live_multigrep({
-      cwd = vim.fn.stdpath('config')
-    })
-  end)
-end
+M.live_multigrep = live_multigrep
 
 return M
