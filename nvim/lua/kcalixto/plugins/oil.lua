@@ -8,12 +8,11 @@ vim.keymap.set('n', '<space>e', function()
     vim.api.nvim_win_close(winid, false)
   else
     vim.g.kcalixto_oil_open = true -- toggle var hehe
-
-    vim.cmd.vnew() -- new window
-    vim.cmd('Oil') -- opens oil of course
-    vim.cmd.wincmd('H') -- mv window to far left
+    vim.cmd.vnew()                 -- new window
+    vim.cmd('Oil')                 -- opens oil of course
+    vim.cmd.wincmd('H')            -- mv window to far left
     vim.api.nvim_win_set_width(0, 35)
-    winid = vim.fn.win_getid() -- saves id for close later
+    winid = vim.fn.win_getid()     -- saves id for close later
   end
 end)
 

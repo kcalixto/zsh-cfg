@@ -16,8 +16,13 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath) -- puts lazy in neovim runtimepath
 
-require("lazy").setup({ import = 'kcalixto.plugins' }, {
-  change_detection = {
-    notify = false,
+require("lazy").setup(
+  {
+    import = 'kcalixto.plugins',
   },
-})
+  {
+    change_detection = {
+      notify = false,
+    },
+  }
+)
