@@ -33,7 +33,7 @@ opt.signcolumn = "yes"
 -- clipboard
 opt.clipboard:append("unnamedplus")
 -- additional typing config
-opt.iskeyword:append("-") -- makes vim take dash as part of the word!!
+-- opt.iskeyword:append("-") -- makes vim take dash as part of the word!!
 -- set shell
 opt.shell = "zsh"
 opt.shellcmdflag = "-i -c" -- -i interative, -c ensures the shell runs the provided command
@@ -45,19 +45,19 @@ opt.shortmess:append { A = true }
 opt.fillchars = { eob = " " }
 -- diagnostic
 vim.diagnostic.config({
-    float = {
-        source = 'if_many',
-        scope = "cursor",
-    },
+  float = {
+    source = 'if_many',
+    scope = "cursor",
+  },
 })
-vim.keymap.set("n", "$<leader>d", function()
-    vim.diagnostic.open_float(nil, { focus = true })
+vim.keymap.set("n", "<leader>d", function()
+  vim.diagnostic.open_float(nil, { focus = true })
 end, { desc = "Show diagnostics in a floating window" })
 
 vim.api.nvim_create_user_command("GoGenerate", function()
-    local cwd = vim.fn.expand("%:p:h")
-    vim.fn.system("cd " .. cwd .. " && go generate")
-    vim.notify("go generate executed", vim.log.levels.INFO)
+  local cwd = vim.fn.expand("%:p:h")
+  vim.fn.system("cd " .. cwd .. " && go generate")
+  vim.notify("go generate executed", vim.log.levels.INFO)
 end, { desc = "Run go generate" })
 
 -- keymaps
@@ -69,8 +69,8 @@ keymap.set('n', '<C-w>_', '<cmd>vs eadirection=hor<CR>', ns)
 --
 keymap.set("n", "x", '"_x', ns)                                -- normal mode deletes a single character without copying
 --
-keymap.set("n", "<leader>sv", "<C-w>v", ns)                    -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s", ns)                    -- split window horizontally
+keymap.set("n", "<leader>sv", "<C-w>v<C-w>l", ns)              -- split window vertically
+keymap.set("n", "<leader>sh", "<C-w>s<C-w>j", ns)              -- split window horizontally
 keymap.set("n", "<leader>se", "<C-w>=", ns)                    -- spit windows in equal width
 keymap.set("n", "<leader>sx", ":close<CR>", ns)                -- close current split window
 keymap.set('n', '<C-W><C-l>', ':vertical resize +15<CR>', ns)  -- increment window size
@@ -86,23 +86,26 @@ keymap.set("n", "<leader>tt", ":tabedit %<CR>", ns)            -- opens current 
 --
 keymap.set('n', '<Leader><CR>', ':noh<CR>', ns)                -- Clear highlight
 --
-keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', ns)
-keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', ns)
-keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', ns)
+-- keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', ns)
+-- keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', ns)
+-- keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', ns)
 --
 keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', ns)
 keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', ns)
 --
+keymap.set('n', '<leader>+', '<C-a>', ns) -- increment number
+keymap.set('n', '<leader>-', '<C-x>', ns) -- decrement number
+--
 keymap.set('n', '<space>st', function()
-    vim.cmd.vnew()
-    vim.cmd.term()
-    vim.cmd.wincmd('J')
-    vim.api.nvim_win_set_height(0, 5)
+  vim.cmd.vnew()
+  vim.cmd.term()
+  vim.cmd.wincmd('J')
+  vim.api.nvim_win_set_height(0, 10)
 end, ns)
 --
 keymap.set('n', '<space>r', function()
-    vim.cmd('LspRestart')
-    vim.notify('lsp restarted', vim.log.levels.INFO)
+  vim.cmd('LspRestart')
+  vim.notify('lsp restarted', vim.log.levels.INFO)
 end, ns)
 --
 keymap.set('n', '<space><space><space>', 'o<esc>30i<CR><esc>', ns)
@@ -115,6 +118,12 @@ keymap.set('n', '<space><space><space>', 'o<esc>30i<CR><esc>', ns)
 -- keymap('n', 'Q', '<Nop>', ns)                                               -- Disable ex mode. I dunno what is it
 keymap.set('', ']b', ':bnext<CR>', ns)
 keymap.set('', '[b', ':bprevious<CR>', ns)
+keymap.set('n', '<BS>b', function() -- close buffer and go to next
+  local bufnr = vim.fn.bufnr()
+  vim.cmd('bnext')
+  vim.cmd('bdelete ' .. bufnr)
+  vim.notify('buffer ' .. bufnr .. ' closed', vim.log.levels.INFO)
+end, ns)
 keymap.set('', ']c', ':cnext<CR>', ns)
 keymap.set('', '[c', ':cprevious<CR>', ns)
 
