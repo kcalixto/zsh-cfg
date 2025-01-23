@@ -1,1 +1,1 @@
-alias caws="code ~/.aws/credentials"
+alias caws="nvim ~/.aws/credentials"
