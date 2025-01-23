@@ -28,9 +28,16 @@ local live_multigrep = function(opts)
         table.insert(args, pieces[2])
       end
 
-      -- force ignore lock files
+      -- js lock files
       table.insert(args, '-g')
       table.insert(args, '!*-lock.json')
+      table.insert(args, '-g')
+      table.insert(args, '!*.lock')
+      -- go mod & sum files
+      table.insert(args, '-g')
+      table.insert(args, '!*.mod')
+      table.insert(args, '-g')
+      table.insert(args, '!*.sum')
 
       return vim.tbl_flatten {
         args,
