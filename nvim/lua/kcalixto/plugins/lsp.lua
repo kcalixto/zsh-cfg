@@ -8,6 +8,7 @@ return {
         'gopls',
         'cspell',
         'eslint-lsp',
+        'eslint_d',
         'html-lsp',
         'json-lsp',
         'lua-language-server',
