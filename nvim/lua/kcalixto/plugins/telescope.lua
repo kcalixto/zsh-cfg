@@ -23,7 +23,13 @@ return {
       vim.keymap.set('n', '<space>fg', function() custom.live_multigrep() end)
       vim.keymap.set('n', '<space>fn', function() custom.live_multigrep({ cwd = vim.fn.stdpath('config') }) end)
       vim.keymap.set('n', '<space>ft', function() builtin.treesitter() end)
-      vim.keymap.set('n', '<space>fd', "<CMD>Telescope diagnostics severity_bound=ERROR root_dir=true<CR>")
+      -- vim.keymap.set('n', '<space>fd', "<CMD>Telescope diagnostics severity_bound=ERROR<CR>")
+      vim.keymap.set('n', '<space>fd', function()
+        builtin.diagnostics({
+          severity = 1,
+          cwd = vim.fn.getcwd(),
+        })
+      end)
     end,
   },
 }
