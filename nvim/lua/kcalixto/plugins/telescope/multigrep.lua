@@ -33,9 +33,9 @@ local live_multigrep = function(opts)
       table.insert(args, '!*-lock.json')
       table.insert(args, '-g')
       table.insert(args, '!*.lock')
-      -- go mod & sum files
-      table.insert(args, '-g')
-      table.insert(args, '!*.mod')
+      -- go sum files
+      -- table.insert(args, '-g')
+      -- table.insert(args, '!*.mod')
       table.insert(args, '-g')
       table.insert(args, '!*.sum')
 
