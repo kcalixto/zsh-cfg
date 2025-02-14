@@ -27,8 +27,9 @@ repo() {
                 echo -e "\xE2\x9D\x8C failed to create repo $repo_name"
                 return
             fi
-            code $repo_name
-            echo -e "\xE2\x9C\x85 done!"
+            echo -e "\xE2\x9C\x85 done! Opening repo in nvim..."
+            cd $repo_name
+            nvim .
         ;;
         "new")
             local repo_name=$2
@@ -38,8 +39,9 @@ repo() {
                 echo -e "\xE2\x9D\x8C failed to create repo $repo_name"
                 return
             fi
-            code $repo_name
-            echo -e "\xE2\x9C\x85 done!"
+            echo -e "\xE2\x9C\x85 done! Opening repo in nvim..."
+            cd $repo_name
+            nvim .
         ;;
         *)
             echo -e "\xE2\x9D\x8C invalid action. Use 'poc' to create a poc repo or 'create' to create a new repo"
