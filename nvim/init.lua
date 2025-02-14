@@ -127,6 +127,14 @@ end, ns)
 keymap.set('', ']c', ':cnext<CR>', ns)
 keymap.set('', '[c', ':cprevious<CR>', ns)
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
+  callback = function()
+    vim.opt_local.textwidth = 35 -- Set line width to 80 characters
+    vim.opt_local.wrap = true    -- Enable soft wrapping
+  end,
+})
+--
 -- keymap('n', '<Leader>dq', '<C-W>k <C-W>o', ns)    -- Close compare buffs
 -- keymap('n', '<Leader>da', ':diffget //2<CR>', ns) -- Get content from left side
 -- keymap('n', '<Leader>dl', ':diffget //3<CR>', ns) -- Get content from right side
@@ -135,3 +143,39 @@ keymap.set('', '[c', ':cprevious<CR>', ns)
 
 -- keymap('n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', ns)
 -- keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', ns)
+
+-- TODO command
+local rnwinid = -1
+local rnbufid = -1
+local note_path = vim.fn.expand('$NOTE_PATH/_todo.md') -- precompute to avoid slow execution
+local function open_ripnote_path()
+  if vim.g.kcalixto_rn_open then
+    vim.cmd('wa') -- save all
+    vim.g.kcalixto_rn_open = false
+    vim.api.nvim_win_close(rnwinid, false)
+    rnwinid = -1
+    rnbufid = -1
+  else
+    vim.g.kcalixto_rn_open = true
+    vim.cmd.vnew()
+    vim.cmd('e ' .. note_path) -- Use the precomputed path
+    vim.cmd.wincmd('L')
+    vim.api.nvim_win_set_width(0, 45)
+    rnwinid = vim.fn.win_getid()
+  end
+end
+vim.api.nvim_create_user_command("Rn", open_ripnote_path, { desc = "Run ripnote" })
+vim.keymap.set('n', '<leader>n', ':Rn<CR>', ns)
+
+vim.cmd([[
+  syn match CustomLineHighlight /^\/\/ \*.*$/
+]])
+vim.cmd([[
+  highlight CustomLineHighlight guifg=lightgreen
+]])
+vim.cmd([[
+  augroup CustomLineHighlight
+    autocmd!
+    autocmd BufEnter * syntax match CustomLineHighlight /^\/\/ \*.*$/
+  augroup END
+]])
