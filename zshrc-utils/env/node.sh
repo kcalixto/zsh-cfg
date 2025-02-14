@@ -20,3 +20,6 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$ANDROID_HOME/cmdline-tools/10.0/bin
+
+# ripnote
+export NOTE_PATH="$HOME/go/src/obsidian-vault/main-vault/notes"
