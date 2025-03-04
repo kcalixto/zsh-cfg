@@ -157,19 +157,17 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- TODO command
 local rnwinid = -1
-local rnbufid = -1
-local note_path = vim.fn.expand('$NOTE_PATH/_todo.md') -- precompute to avoid slow execution
+local note_file = vim.fn.expand('$NOTE_PATH/_todo.md') -- precompute to avoid slow execution
 local function open_ripnote_path()
   if vim.g.kcalixto_rn_open then
-    vim.cmd('wa') -- save all
+    vim.cmd('w ' .. note_file) -- save only notes file
     vim.g.kcalixto_rn_open = false
     vim.api.nvim_win_close(rnwinid, false)
     rnwinid = -1
-    rnbufid = -1
   else
     vim.g.kcalixto_rn_open = true
     vim.cmd.vnew()
-    vim.cmd('e ' .. note_path) -- Use the precomputed path
+    vim.cmd('e ' .. note_file) -- Use the precomputed path
     vim.cmd.wincmd('L')
     vim.api.nvim_win_set_width(0, 45)
     rnwinid = vim.fn.win_getid()
