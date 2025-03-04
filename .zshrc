@@ -1,42 +1,28 @@
-# TODO - organize this shit again
-
+echo ".zshrc loading... (10%)"
 export ZSH="$HOME/.oh-my-zsh"
-# this repo location in your machine :)
-export ZSH_CFG_HOME="$HOME/go/src/zsh-cfg"
-
+export ZSH_CFG_HOME="$HOME/go/src/zsh-cfg" # this repo location in your machine :)
 ZSH_THEME="robbyrussell"
-# ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git web-search zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
-base_folder="$HOME/go/src/zsh-cfg/zshrc-utils"
-find "$base_folder" -type f -name "*.sh" | while read -r script; do
-    source "$script"
-done
+# start_time=$(python3 -c 'from time import time; print(int(round(time() * 1000)))')
+echo ".zshrc loading... (30%)"
+source $ZSH_CFG_HOME/env.sh
+source $ZSH_CFG_HOME/aliases.sh
+# end_time=$(python3 -c 'from time import time; print(int(round(time() * 1000)))')
+# elapsed_time=$((end_time - start_time))
+# echo "Elapsed time: $elapsed_time milliseconds"
 
+echo ".zshrc loading... (60%)"
 base_folder="$HOME/go/src/zsh-cfg/scripts"
 find "$base_folder" -type f -name "*.sh" | while read -r script; do
     source "$script"
 done
 
-aws_logs() {
-    local log_group
-    local log_stream
-    log_group=$(aws logs describe-log-groups --region sa-east-1 | jq -r ".logGroups[].logGroupName" | fzf --preview '')
-    option=$(echo -e "search\ntail" | fzf --preview '')
-
-    if [ "$option" = "search" ]; then
-        log_stream=$(aws logs describe-log-streams --region sa-east-1 --log-group-name "$log_group" --max-items 5 --order-by LastEventTime --descending | jq -r '.logStreams[].logStreamName' | fzf --preview '')
-        aws logs get-log-events --log-stream-name "$log_stream" --log-group-name "$log_group" --region sa-east-1 | jq ".events[].message" | fzf --preview 'echo {}' --preview-window wrap
-    elif [ "$option" = "tail" ]; then
-        aws logs tail $log_group --follow --region sa-east-1 --since 1h
-    else
-        echo "Invalid option"
-    fi
-}
-
-# oh my posh
-# eval "$(oh-my-posh init zsh --config '/Users/kaua.calixto/go/src/zsh-cfg/oh-my-posh/config.omp.json')"
-
-echo "🤖  Loaded .zshrc"
+echo ".zshrc loading... (90%)"
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+echo ".zshrc loaded (100%)"
+
+source ~/.secrets.sh
+
