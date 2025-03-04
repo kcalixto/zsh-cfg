@@ -1,6 +1,63 @@
 return {
-  -- { 'Mofiqul/dracula.nvim' },
-  -- { 'folke/tokyonight.nvim' },
+  {
+    'Djancyp/better-comments.nvim',
+    enabled = true,
+    config = function()
+      require('better-comment').Setup {
+        tags = {
+          {
+            name = "TODO",
+            fg = "white",
+            bg = "#0a7aca",
+            bold = false,
+            virtual_text = "",
+          },
+          {
+            name = "FIX",
+            fg = "white",
+            bg = "#f44747",
+            bold = false,
+            virtual_text = "",
+          },
+          {
+            name = "Warning",
+            fg = "#FFA500",
+            bg = "",
+            bold = false,
+            virtual_text = "",
+          },
+          {
+            name = "WARNING",
+            fg = "#FFA500",
+            bg = "",
+            bold = false,
+            virtual_text = "",
+          },
+          {
+            name = "!",
+            fg = "#f44747",
+            bg = "",
+            bold = false,
+            virtual_text = "",
+          },
+          {
+            name = "*",
+            fg = "#9bc98d",
+            bg = "",
+            bold = false,
+            virtual_text = "",
+          },
+          {
+            name = "?",
+            fg = "#0aa7f0",
+            bg = "",
+            bold = false,
+            virtual_text = "",
+          }
+        }
+      }
+    end
+  },
   {
     'projekt0n/github-nvim-theme',
     name = 'github-theme',
