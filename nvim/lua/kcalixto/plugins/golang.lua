@@ -1,5 +1,6 @@
 return {
   'ray-x/navigator.lua',
+  enabled = true,
   dependencies = {
     { 'hrsh7th/nvim-cmp' }, { 'nvim-treesitter/nvim-treesitter' },
     { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
@@ -29,6 +30,11 @@ return {
         vim.api.nvim_buf_set_keymap(0, 'n', '<C-i>', ':GoImport<CR>', {})
         vim.api.nvim_buf_set_keymap(0, 'n', '<C-t>', ':GoTestPkg<CR>', {})
         vim.api.nvim_buf_set_keymap(0, 'n', '<C-c>', ':GoCoverage -p<CR>', {})
+        -- GoCoverage	go test -coverprofile
+        -- GoCoverage -p	go test -coverprofile (only tests package for current buffer)
+        -- GoCoverage -f coverage_file_name	load coverage file
+        -- GoCoverage {flags}	-t : toggle, -r: remove signs, -R remove sings from all files, -m show metrics
+        -- GoCoverage {flags} {go test flags}	e.g: GoCoverage -p -coverpkg 'yourpackagename'
       end,
     })
   end
