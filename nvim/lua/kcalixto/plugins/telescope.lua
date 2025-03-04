@@ -42,7 +42,7 @@ return {
       local custom = require('kcalixto.plugins.telescope.multigrep')
 
       vim.api.nvim_set_hl(0, 'TelescopeBorder', { fg = '#e9537a' })
-      vim.api.nvim_set_hl(0, 'TelescopeResultsNormal', { fg = '#656c90' })
+      vim.api.nvim_set_hl(0, 'TelescopeResultsNormal', { fg = '#a7acc7' })
 
       vim.keymap.set('n', '<space>fh', function() builtin.help_tags() end)
       vim.keymap.set('n', '<space>F', function() builtin.git_files({ cwd = vim.fn.getcwd() }) end)
