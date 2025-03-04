@@ -36,6 +36,7 @@ lspkind.init({
 cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
+    { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
     { name = 'nvim_lsp_signature_help' },
@@ -53,6 +54,14 @@ cmp.setup {
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
     ['<C-f>'] = cmp.mapping.scroll_docs(-4),
     ['<C-Space>'] = cmp.mapping.complete(),
+    -- Add this mapping for <C-k> to jump to the next argument
+    ['<C-k>'] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(1) then
+        luasnip.jump(1) -- Jump to the next placeholder
+      else
+        fallback()      -- Fallback to default behavior if no placeholder is available
+      end
+    end, { 'i', 's' }),
   },
 
   snippet = {
