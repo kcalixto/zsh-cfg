@@ -55,8 +55,14 @@ end, { desc = "Show diagnostics in a floating window" })
 
 vim.api.nvim_create_user_command("GoGenerate", function()
   local cwd = vim.fn.expand("%:p:h")
-  vim.fn.system("cd " .. cwd .. " && go generate")
-  vim.notify("go generate executed", vim.log.levels.INFO)
+  vim.notify("Running go generate at " .. cwd, vim.log.levels.INFO)
+  -- change to the directory of the current file
+  vim.cmd("lcd " .. cwd)
+  -- capture the output of the command
+  local output = vim.fn.systemlist("go generate")
+  for _, line in ipairs(output) do
+    vim.notify(line, vim.log.levels.INFO)
+  end
 end, { desc = "Run go generate" })
 
 -- keymaps
