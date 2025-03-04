@@ -54,14 +54,6 @@ cmp.setup {
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
     ['<C-f>'] = cmp.mapping.scroll_docs(-4),
     ['<C-Space>'] = cmp.mapping.complete(),
-    -- Add this mapping for <C-k> to jump to the next argument
-    ['<C-k>'] = cmp.mapping(function(fallback)
-      if luasnip.jumpable(1) then
-        luasnip.jump(1) -- Jump to the next placeholder
-      else
-        fallback()      -- Fallback to default behavior if no placeholder is available
-      end
-    end, { 'i', 's' }),
   },
 
   snippet = {
@@ -84,3 +76,15 @@ cmp.setup {
     end,
   },
 }
+
+vim.keymap.set({ 'i', 's' }, "<C-k>", function()
+  if luasnip.expand_or_jumpable() then
+    luasnip.expand_or_jump()
+  end
+end, { silent = true })
+
+vim.keymap.set({ 'i', 's' }, "<C-j>", function()
+  if luasnip.jumpable(-1) then
+    luasnip.jump(-1)
+  end
+end, { silent = true })

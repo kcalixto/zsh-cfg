@@ -16,7 +16,15 @@ return {
   {
     "L3MON4D3/LuaSnip",
     version = "v2.*",
-    build = "make install_jsregexp"
+    build = "make install_jsregexp",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+    },
+    config = function()
+      require("luasnip").setup()
+      -- https://github.com/rafamadriz/friendly-snippets/blob/efff286dd74c22f731cdec26a70b46e5b203c619/snippets/go.json
+      require("luasnip/loaders/from_vscode").lazy_load()
+    end,
   },
   {
     event = 'VeryLazy',
