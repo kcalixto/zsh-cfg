@@ -12,23 +12,47 @@ return {
         extensions = {
           fzf = {},
         },
+        defaults = {
+          path_display = {
+            'shorten',
+          },
+          mappings = {
+            i = {
+              ['<C-l>'] = require('telescope.actions.layout').toggle_preview, -- look preview
+            }
+          },
+          preview = {
+            hide_on_startup = true,
+            timeout = 100,        -- 100ms
+            filesize_limit = 0.5, -- 500 KB
+          },
+          layout_config = {
+            prompt_position = 'top',
+            preview_width = 0.65,
+            width = 0.95,
+            height = 0.85,
+          },
+          sorting_strategy = 'ascending',
+        },
       }
       require('telescope').load_extension('fzf') -- makes telescope faster
 
       local builtin = require('telescope.builtin')
+      local themes = require('telescope.themes')
       local custom = require('kcalixto.plugins.telescope.multigrep')
 
+      vim.api.nvim_set_hl(0, 'TelescopeBorder', { fg = '#e9537a' })
+      vim.api.nvim_set_hl(0, 'TelescopeResultsNormal', { fg = '#656c90' })
+
       vim.keymap.set('n', '<space>fh', function() builtin.help_tags() end)
-      vim.keymap.set('n', '<space>F', function() builtin.find_files({ cwd = vim.fn.getcwd(), hidden = true }) end)
-      vim.keymap.set('n', '<space>fg', function() custom.live_multigrep() end)
-      vim.keymap.set('n', '<space>fn', function() custom.live_multigrep({ cwd = vim.fn.stdpath('config') }) end)
+      vim.keymap.set('n', '<space>F', function() builtin.git_files({ cwd = vim.fn.getcwd() }) end)
+      vim.keymap.set('n', '<space>fg', function() custom.live_multigrep({ preview = { hide_on_startup = false } }) end)
       vim.keymap.set('n', '<space>ft', function() builtin.treesitter() end)
-      -- vim.keymap.set('n', '<space>fd', "<CMD>Telescope diagnostics severity_bound=ERROR<CR>")
       vim.keymap.set('n', '<space>fd', function()
-        builtin.diagnostics({
+        builtin.diagnostics(themes.get_ivy({
           severity = 1,
           cwd = vim.fn.getcwd(),
-        })
+        }))
       end)
     end,
   },
