@@ -188,3 +188,10 @@ vim.cmd([[
     autocmd BufEnter * syntax match CustomLineHighlight /^\/\/ \*.*$/
   augroup END
 ]])
+
+-- CopyFilePath command
+vim.api.nvim_create_user_command("CopyFilePath", function()
+  local path = vim.fn.expand('%:p')
+  vim.fn.setreg('+', path)
+  vim.notify('copied ' .. path, vim.log.levels.INFO)
+end, { desc = "Copy file path" })
