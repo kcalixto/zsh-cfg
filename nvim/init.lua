@@ -206,3 +206,6 @@ vim.api.nvim_create_user_command("CopyFilePath", function()
   vim.fn.setreg('+', path)
   vim.notify('copied ' .. path, vim.log.levels.INFO)
 end, { desc = "Copy file path" })
+
+-- leap
+require('leap').create_default_mappings()
