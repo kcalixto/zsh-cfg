@@ -1,7 +1,11 @@
 echo ".zshrc loading... (10%)"
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CFG_HOME="$HOME/go/src/zsh-cfg" # this repo location in your machine :)
-ZSH_THEME="robbyrussell"
+ZSH_THEME="nicoulaj"
+# frontcube
+# gozilla
+# kolo
+# nicoulaj
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 

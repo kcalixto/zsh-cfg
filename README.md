@@ -11,3 +11,12 @@ ln bin/obsidian /usr/local/bin/obsidian
 
 <!-- scripts -->
 ./crontab.sh
+
+<!-- to change tmux theme -->
+```
+inside tmux:
+source-file ~/.tmux.conf
+
+outside tmux:
+tmux kill-server 
+```
