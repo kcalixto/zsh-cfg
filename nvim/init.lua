@@ -82,6 +82,17 @@ keymap.set('n', '<C-W><C-l>', ':vertical resize +15<CR>', ns)   -- increment win
 keymap.set('n', '<C-W><C-h>', ':vertical resize -15<CR>', ns)   -- decrement window size
 keymap.set('n', '<C-W><C-j>', ':horizontal resize +10<CR>', ns) -- increment window size
 keymap.set('n', '<C-W><C-k>', ':horizontal resize -10<CR>', ns) -- decrement window size
+
+-- this is wild
+keymap.set("t", "<Esc>", "<C-\\><C-n>", ns)
+keymap.set("n", "<M-h>", "<C-\\><C-n><C-w>h", ns)
+keymap.set("n", "<M-j>", "<C-\\><C-n><C-w>j", ns)
+keymap.set("n", "<M-k>", "<C-\\><C-n><C-w>k", ns)
+keymap.set("n", "<M-l>", "<C-\\><C-n><C-w>l", ns)
+keymap.set('n', '<C-w>h', '<Nop>', ns)
+keymap.set('n', '<C-w>j', '<Nop>', ns)
+keymap.set('n', '<C-w>k', '<Nop>', ns)
+keymap.set('n', '<C-w>l', '<Nop>', ns)
 -- Resize with arrows
 -- keymap.set('n', '<Leader><Up>', ':resize +15<CR>', ns)
 -- keymap.set('n', '<Leader><Down>', ':resize -15<CR>', ns)
