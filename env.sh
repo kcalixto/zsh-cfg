@@ -9,11 +9,7 @@ source "/Users/kaua.calixto/.gvm/scripts/gvm"
 # export GOROOT=/Users/kaua.calixto/.gvm/gos/go1.19
 # export GOROOT_BOOTSTRAP=$GOROOT
 # # don't forget to add ssh over https in .gitconfig
-# export GOPRIVATE=github.com 
-export GOPRIVATE=git@github.com/AcordoCertoBR
-
 export GOPATH=$HOME/go/src
-
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 ################################################################################
 # Node
@@ -41,8 +37,6 @@ export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$ANDROID_HOME/cmdline-tools/10.0/bin
 
-# ripnote
-export NOTE_PATH="$HOME/go/src/obsidian-vault/main-vault/notes"
 ################################################################################
 # Java
 ################################################################################
@@ -61,8 +55,3 @@ export PATH=$PATH:/usr/bin
 export PATH=$PATH:/sbin
 export PATH=$PATH:/bin
 
-# newco cli
-export PATH=$PATH:~/go/src/newco-cli_darwin_all_0.0.1
-
-# others
-export PATH=$PATH:/Users/kaua.calixto/.spicetify
