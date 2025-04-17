@@ -17,6 +17,7 @@ opt.wrap = false
 opt.number = true
 opt.relativenumber = true
 opt.scrolloff = 10
+-- opt.foldmethod = 'indent'
 -- tabs & spacing
 opt.tabstop = 4
 opt.expandtab = true
@@ -44,25 +45,25 @@ opt.shortmess:append { A = true }
 opt.fillchars = { eob = " " }
 -- diagnostic
 vim.diagnostic.config({
-  float = {
-    source = 'if_many',
-    scope = "cursor",
-  },
+    float = {
+        source = 'if_many',
+        scope = "cursor",
+    },
 })
 vim.keymap.set("n", "<leader>d", function()
-  vim.diagnostic.open_float(nil, { focus = true })
+    vim.diagnostic.open_float(nil, { focus = true })
 end, { desc = "Show diagnostics in a floating window" })
 
 vim.api.nvim_create_user_command("GoGenerate", function()
-  local cwd = vim.fn.expand("%:p:h")
-  vim.notify("Running go generate at " .. cwd, vim.log.levels.INFO)
-  -- change to the directory of the current file
-  vim.cmd("lcd " .. cwd)
-  -- capture the output of the command
-  local output = vim.fn.systemlist("go generate")
-  for _, line in ipairs(output) do
-    vim.notify(line, vim.log.levels.INFO)
-  end
+    local cwd = vim.fn.expand("%:p:h")
+    vim.notify("Running go generate at " .. cwd, vim.log.levels.INFO)
+    -- change to the directory of the current file
+    vim.cmd("lcd " .. cwd)
+    -- capture the output of the command
+    local output = vim.fn.systemlist("go generate")
+    for _, line in ipairs(output) do
+        vim.notify(line, vim.log.levels.INFO)
+    end
 end, { desc = "Run go generate" })
 
 -- keymaps
@@ -72,7 +73,7 @@ keymap.set("v", "<space>x", ":lua<CR>", ns)
 --
 keymap.set('n', '<C-w>_', '<cmd>vs eadirection=hor<CR>', ns)
 --
-keymap.set("n", "x", '"_x', ns)                                 -- normal mode deletes a single character without copying
+-- keymap.set("n", "x", '"_x', ns)                                 -- normal mode deletes a single character without copying
 --
 keymap.set("n", "<leader>sv", "<C-w>v<C-w>l", ns)               -- split window vertically
 keymap.set("n", "<leader>sh", "<C-w>s<C-w>j", ns)               -- split window horizontally
@@ -84,7 +85,8 @@ keymap.set('n', '<C-W><C-j>', ':horizontal resize +10<CR>', ns) -- increment win
 keymap.set('n', '<C-W><C-k>', ':horizontal resize -10<CR>', ns) -- decrement window size
 
 -- this is wild
-keymap.set("t", "<Esc>", "<C-\\><C-n>", ns)
+keymap.set("t", "<Esc>", "<C-\\><C-n>", ns) -- exit terminal with esc
+-- navigate with option
 keymap.set("n", "<M-h>", "<C-\\><C-n><C-w>h", ns)
 keymap.set("n", "<M-j>", "<C-\\><C-n><C-w>j", ns)
 keymap.set("n", "<M-k>", "<C-\\><C-n><C-w>k", ns)
@@ -117,17 +119,18 @@ keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', ns)
 keymap.set('n', '<leader>+', '<C-a>', ns) -- increment number
 keymap.set('n', '<leader>-', '<C-x>', ns) -- decrement number
 --
+-- small terminal
 keymap.set('n', '<space>st', function()
-  -- vim.cmd.split()
-  -- vim.cmd.term()
-  -- vim.cd.wincmd('J')
-  -- vim.api.nvim_win_set_height(0, 10)
-  vim.cmd('below 10split | term')
+    -- vim.cmd.split()
+    -- vim.cmd.term()
+    -- vim.cd.wincmd('J')
+    -- vim.api.nvim_win_set_height(0, 10)
+    vim.cmd('below 10split | term')
 end, ns)
 --
 keymap.set('n', '<space>r', function()
-  vim.cmd('LspRestart')
-  vim.notify('lsp restarted', vim.log.levels.INFO)
+    vim.cmd('LspRestart')
+    vim.notify('lsp restarted', vim.log.levels.INFO)
 end, ns)
 --
 keymap.set('n', '<space><space><space>', 'o<esc>30i<CR><esc>', ns)
@@ -141,20 +144,20 @@ keymap.set('n', '<space><space><space>', 'o<esc>30i<CR><esc>', ns)
 keymap.set('', ']b', ':bnext<CR>', ns)
 keymap.set('', '[b', ':bprevious<CR>', ns)
 keymap.set('n', '<BS>b', function() -- close buffer and go to next
-  local bufnr = vim.fn.bufnr()
-  vim.cmd('bnext')
-  vim.cmd('bdelete ' .. bufnr)
-  vim.notify('buffer ' .. bufnr .. ' closed', vim.log.levels.INFO)
+    local bufnr = vim.fn.bufnr()
+    vim.cmd('bnext')
+    vim.cmd('bdelete ' .. bufnr)
+    vim.notify('buffer ' .. bufnr .. ' closed', vim.log.levels.INFO)
 end, ns)
 keymap.set('', ']c', ':cnext<CR>', ns)
 keymap.set('', '[c', ':cprevious<CR>', ns)
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'markdown',
-  callback = function()
-    vim.opt_local.textwidth = 35 -- Set line width to 80 characters
-    vim.opt_local.wrap = true    -- Enable soft wrapping
-  end,
+    pattern = 'markdown',
+    callback = function()
+        vim.opt_local.textwidth = 35 -- Set line width to 80 characters
+        vim.opt_local.wrap = true    -- Enable soft wrapping
+    end,
 })
 --
 -- keymap('n', '<Leader>dq', '<C-W>k <C-W>o', ns)    -- Close compare buffs
@@ -202,10 +205,10 @@ vim.cmd([[
 
 -- CopyFilePath command
 vim.api.nvim_create_user_command("CopyFilePath", function()
-  local path = vim.fn.expand('%:p')
-  vim.fn.setreg('+', path)
-  vim.notify('copied ' .. path, vim.log.levels.INFO)
+    local path = vim.fn.expand('%:p')
+    vim.fn.setreg('+', path)
+    vim.notify('copied ' .. path, vim.log.levels.INFO)
 end, { desc = "Copy file path" })
 
 -- leap
-require('leap').create_default_mappings()
+require('leap').create_default_mappings() -- todo: disable this
