@@ -2,6 +2,7 @@ return {
   -- existing plugins...
   {
     "yetone/avante.nvim",
+    commit = "142864860945b5169e87b3ce6853a59fa8eb45d7",
     event = "VeryLazy",
     lazy = false,
     version = false,
@@ -51,4 +52,5 @@ return {
     },
   },
   -- other plugins...
-} 
+}
+
