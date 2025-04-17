@@ -54,4 +54,9 @@ export PATH=$PATH:/usr/sbin
 export PATH=$PATH:/usr/bin
 export PATH=$PATH:/sbin
 export PATH=$PATH:/bin
+export PATH=$PATH:/Users/kaua.calixto/.local/bin
 
+################################################################################
+# Others
+################################################################################
+export NOTE_PATH="~/go/src/obsidian-vault/main-vault/notes/"
