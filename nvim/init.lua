@@ -212,3 +212,17 @@ end, { desc = "Copy file path" })
 
 -- leap
 require('leap').create_default_mappings() -- todo: disable this
+
+-- Mock command to open random files so i can test some plugin
+vim.api.nvim_create_user_command('Mock', function()
+        vim.cmd('e ~/.config/nvim/init.lua')
+        vim.cmd.split()
+        vim.cmd('e ~/.config/nvim/lua/kcalixto/lsp.lua')
+        vim.cmd.split()
+        vim.cmd('e ~/.config/nvim/lua/kcalixto/completion.lua')
+        vim.cmd.vsplit()
+        vim.cmd('e ~/.config/nvim/lua/kcalixto/lazy.lua')
+        vim.cmd('below 10split | term')
+    end,
+    { desc = "Mock files" }
+)
