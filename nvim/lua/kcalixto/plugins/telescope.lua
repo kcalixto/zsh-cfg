@@ -14,7 +14,8 @@ return {
         },
         defaults = {
           path_display = {
-            'shorten',
+            -- 'shorten',
+            'smart',
           },
           mappings = {
             i = {
@@ -45,7 +46,8 @@ return {
       vim.api.nvim_set_hl(0, 'TelescopeResultsNormal', { fg = '#a7acc7' })
 
       vim.keymap.set('n', '<space>fh', function() builtin.help_tags() end)
-      vim.keymap.set('n', '<space>F', function() builtin.git_files({ cwd = vim.fn.getcwd() }) end)
+      -- vim.keymap.set('n', '<space>F', function() builtin.git_files({ cwd = vim.fn.getcwd() }) end)
+      vim.keymap.set('n', '<space>F', function() builtin.find_files({ cwd = vim.fn.getcwd() }) end)
       vim.keymap.set('n', '<space>fg', function() custom.live_multigrep({ preview = { hide_on_startup = false } }) end)
       vim.keymap.set('n', '<space>ft', function() builtin.treesitter() end)
       vim.keymap.set('n', '<space>fb', function() builtin.buffers() end)
