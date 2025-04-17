@@ -255,3 +255,60 @@ vim.api.nvim_create_user_command('DeleteHiddenBuffersForced', function()
 
     vim.notify(deleted .. " hidden buffer(s) deleted", vim.log.levels.INFO)
 end, { desc = "Delete hidden buffers" })
+
+-- AI command
+local goose_term_buf = nil
+local goose_term_win = nil
+
+-- Function to open or toggle a terminal with goose on the right side
+function ToggleGooseTerminal()
+    local width = 55
+
+    -- If the window exists and is valid, close it
+    if goose_term_win and vim.api.nvim_win_is_valid(goose_term_win) then
+        vim.api.nvim_win_close(goose_term_win, true)
+        goose_term_win = nil
+        return
+    end
+
+    -- If we have a buffer but no window, create a new window
+    if goose_term_buf and vim.api.nvim_buf_is_valid(goose_term_buf) then
+        -- Create a new window on the right
+        vim.cmd('botright vertical split')
+        -- Resize to specified width
+        vim.cmd('vertical resize ' .. width)
+        -- Set the window to use our existing buffer
+        goose_term_win = vim.api.nvim_get_current_win()
+        vim.api.nvim_win_set_buf(goose_term_win, goose_term_buf)
+        -- Enter insert mode
+        vim.cmd('startinsert')
+    else
+        -- Create new window and buffer
+        vim.cmd('botright vertical new')
+        -- Resize to specified width
+        vim.cmd('vertical resize ' .. width)
+        -- Start goose in a terminal
+        -- goose session -n session-name
+        -- goose session -r
+        -- goose session -r --name session-name
+        vim.cmd('terminal goose')
+        -- Store references to the buffer and window
+        goose_term_buf = vim.api.nvim_get_current_buf()
+        goose_term_win = vim.api.nvim_get_current_win()
+        -- Enter insert mode
+        vim.cmd('startinsert')
+
+        -- Set buffer options for the terminal
+        vim.api.nvim_buf_set_option(goose_term_buf, 'bufhidden', 'hide')
+        vim.api.nvim_buf_set_option(goose_term_buf, 'buflisted', false)
+    end
+end
+
+-- Create a user command to call this function
+vim.api.nvim_create_user_command('ToggleGooseTerminal', function()
+    ToggleGooseTerminal()
+end, { desc = "Toggle goose terminal sidebar" })
+
+-- Map it to <leader>ai
+vim.api.nvim_set_keymap('n', '<leader>aI', ':ToggleGooseTerminal<CR>', { noremap = true, silent = true })
+
