@@ -118,7 +118,6 @@ keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', ns)
 --
 keymap.set('n', '<leader>+', '<C-a>', ns) -- increment number
 keymap.set('n', '<leader>-', '<C-x>', ns) -- decrement number
---
 -- small terminal
 keymap.set('n', '<space>st', function()
     -- vim.cmd.split()
@@ -312,3 +311,59 @@ end, { desc = "Toggle goose terminal sidebar" })
 -- Map it to <leader>ai
 vim.api.nvim_set_keymap('n', '<leader>aI', ':ToggleGooseTerminal<CR>', { noremap = true, silent = true })
 
+--
+-- CODEX AI Agent command
+local codex_term_buf = nil
+local codex_term_win = nil
+
+-- Function to open or toggle a terminal with codex on the right side
+function ToggleCodexTerminal()
+    local width = 55
+
+    -- If the window exists and is valid, close it
+    if codex_term_win and vim.api.nvim_win_is_valid(codex_term_win) then
+        vim.api.nvim_win_close(codex_term_win, true)
+        codex_term_win = nil
+        return
+    end
+
+    -- If we have a buffer but no window, create a new window
+    if codex_term_buf and vim.api.nvim_buf_is_valid(codex_term_buf) then
+        -- Create a new window on the right
+        vim.cmd('botright vertical split')
+        -- Resize to specified width
+        vim.cmd('vertical resize ' .. width)
+        -- Set the window to use our existing buffer
+        codex_term_win = vim.api.nvim_get_current_win()
+        vim.api.nvim_win_set_buf(codex_term_win, codex_term_buf)
+        -- Enter insert mode
+        vim.cmd('startinsert')
+    else
+        -- Create new window and buffer
+        vim.cmd('botright vertical new')
+        -- Resize to specified width
+        vim.cmd('vertical resize ' .. width)
+        -- Start codex in a terminal
+        -- codex session -n session-name
+        -- codex session -r
+        -- codex session -r --name session-name
+        vim.cmd('terminal codex')
+        -- Store references to the buffer and window
+        codex_term_buf = vim.api.nvim_get_current_buf()
+        codex_term_win = vim.api.nvim_get_current_win()
+        -- Enter insert mode
+        vim.cmd('startinsert')
+
+        -- Set buffer options for the terminal
+        vim.api.nvim_buf_set_option(codex_term_buf, 'bufhidden', 'hide')
+        vim.api.nvim_buf_set_option(codex_term_buf, 'buflisted', false)
+    end
+end
+
+-- Create a user command to call this function
+vim.api.nvim_create_user_command('ToggleCodexTerminal', function()
+    ToggleCodexTerminal()
+end, { desc = "Toggle codex terminal sidebar" })
+
+-- Map it to <leader>ai
+vim.api.nvim_set_keymap('n', '<leader>ai', ':ToggleCodexTerminal<CR>', { noremap = true, silent = true })
