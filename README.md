@@ -3,10 +3,12 @@
 ln .alacritty.toml ~/.alacritty.toml
 ln .zshrc ~/.zshrc
 ln .tmux.conf ~/.tmux.conf
+ln .gitconfig ~/.gitconfig
+ln .goosehints ~/.config/goose/.goosehints
 ```
 # folders
 ```
-ln ~/go/src/zsh-cfg/nvim ~/.config/nvim
+ln -s ~/go/src/zsh-cfg/nvim ~/.config/nvim
 ```
 # binaries
 ```bash
