@@ -172,23 +172,23 @@ vim.api.nvim_create_autocmd('FileType', {
 -- TODO command
 local rnwinid = -1
 local note_file = vim.fn.expand('$NOTE_PATH/_todo.md') -- precompute to avoid slow execution
-local function open_ripnote_path()
-  if vim.g.kcalixto_rn_open then
-    vim.cmd('w ' .. note_file) -- save only notes file
-    vim.g.kcalixto_rn_open = false
-    vim.api.nvim_win_close(rnwinid, false)
-    rnwinid = -1
-  else
-    vim.g.kcalixto_rn_open = true
-    vim.cmd.vnew()
-    vim.cmd('e ' .. note_file) -- Use the precomputed path
-    vim.cmd.wincmd('L')
-    vim.api.nvim_win_set_width(0, 45)
-    rnwinid = vim.fn.win_getid()
-  end
+local function Notes()
+    if vim.g.kcalixto_rn_open then
+        vim.cmd('w ' .. note_file) -- save only notes file
+        vim.g.kcalixto_rn_open = false
+        vim.api.nvim_win_close(rnwinid, false)
+        rnwinid = -1
+    else
+        vim.g.kcalixto_rn_open = true
+        vim.cmd.vnew()
+        vim.cmd('e ' .. note_file) -- Use the precomputed path
+        vim.cmd.wincmd('L')
+        vim.api.nvim_win_set_width(0, 45)
+        rnwinid = vim.fn.win_getid()
+    end
 end
-vim.api.nvim_create_user_command("Rn", open_ripnote_path, { desc = "Run ripnote" })
-vim.keymap.set('n', '<leader>n', ':Rn<CR>', ns)
+vim.api.nvim_create_user_command("Notes", Notes, { desc = "Open notes" })
+vim.keymap.set('n', '<leader>n', ':Notes<CR>', ns)
 
 vim.cmd([[
   syn match CustomLineHighlight /^\/\/ \*.*$/
