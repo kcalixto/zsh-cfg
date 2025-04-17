@@ -49,8 +49,8 @@ return {
           },
           {
             name = "?",
-            fg = "#0aa7f0",
-            bg = "",
+            fg = "white",
+            bg = "#0a7aca",
             bold = false,
             virtual_text = "",
           }
