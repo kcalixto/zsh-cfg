@@ -226,3 +226,32 @@ vim.api.nvim_create_user_command('Mock', function()
     end,
     { desc = "Mock files" }
 )
+
+-- DeleteHiddenBuffers
+vim.api.nvim_create_user_command('DeleteHiddenBuffersForced', function()
+    local deleted = 0
+    local buffers = vim.api.nvim_list_bufs()
+
+    for _, buf in ipairs(buffers) do
+        -- Check if buffer exists and is loaded but not visible in any window
+        if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_is_loaded(buf) then
+            local is_visible = false
+
+            -- Check all windows to see if buffer is visible
+            for _, win in ipairs(vim.api.nvim_list_wins()) do
+                if vim.api.nvim_win_get_buf(win) == buf then
+                    is_visible = true
+                    break
+                end
+            end
+
+            -- If buffer is not visible and not modified, delete it
+            if not is_visible and not vim.api.nvim_buf_get_option(buf, 'modified') then
+                vim.api.nvim_buf_delete(buf, { force = true })
+                deleted = deleted + 1
+            end
+        end
+    end
+
+    vim.notify(deleted .. " hidden buffer(s) deleted", vim.log.levels.INFO)
+end, { desc = "Delete hidden buffers" })
