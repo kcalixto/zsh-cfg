@@ -169,21 +169,44 @@ vim.api.nvim_create_autocmd('FileType', {
 -- keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', ns)
 
 -- TODO command
-local rnwinid = -1
+local notes_term_buf = -1
+local notes_term_win = -1
 local note_file = vim.fn.expand('$NOTE_PATH/_todo.md') -- precompute to avoid slow execution
+
 local function Notes()
-    if vim.g.kcalixto_rn_open then
-        vim.cmd('w ' .. note_file) -- save only notes file
-        vim.g.kcalixto_rn_open = false
-        vim.api.nvim_win_close(rnwinid, false)
-        rnwinid = -1
+    local width = 45
+
+    -- If the window exists and is valid, close it
+    if notes_term_buf and vim.api.nvim_win_is_valid(notes_term_win) then
+        vim.cmd('w ' .. note_file) -- save file
+        vim.api.nvim_win_close(notes_term_win, true)
+        notes_term_win = -1
+        return
+    end
+
+    if notes_term_buf and vim.api.nvim_buf_is_valid(notes_term_buf) then
+        -- Create a new window on the right
+        vim.cmd('botright vertical split')
+        -- Resize to specified width
+        vim.cmd('vertical resize ' .. width)
+        -- Set the window to use our existing buffer
+        notes_term_win = vim.api.nvim_get_current_win()
+        vim.api.nvim_win_set_buf(notes_term_win, notes_term_buf)
     else
-        vim.g.kcalixto_rn_open = true
-        vim.cmd.vnew()
+        -- Create new window and buffer
+        vim.cmd('botright vertical new')
+        -- Resize to specified width
+        vim.cmd('vertical resize ' .. width)
+
         vim.cmd('e ' .. note_file) -- Use the precomputed path
-        vim.cmd.wincmd('L')
-        vim.api.nvim_win_set_width(0, 45)
-        rnwinid = vim.fn.win_getid()
+
+        -- Store references to the buffer and window
+        notes_term_buf = vim.api.nvim_get_current_buf()
+        notes_term_win = vim.api.nvim_get_current_win()
+
+        -- Set buffer options
+        vim.api.nvim_buf_set_option(notes_term_buf, 'bufhidden', 'hide')
+        vim.api.nvim_buf_set_option(notes_term_buf, 'buflisted', false)
     end
 end
 vim.api.nvim_create_user_command("Notes", Notes, { desc = "Open notes" })
