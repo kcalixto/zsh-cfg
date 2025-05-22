@@ -5,13 +5,8 @@ local opt = vim.opt
 local keymap = vim.keymap
 local ns = { noremap = true, silent = true }
 --
--- ! imports
+-- ! configs
 --
-require('kcalixto.lazy')
-require('kcalixto.completion')
-require('kcalixto.lsp')
-require('kcalixto.colorscheme')
-require('leap').create_default_mappings()
 -- tabs & spacing
 opt.tabstop = 4
 opt.expandtab = true
@@ -123,6 +118,15 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.wrap = true    -- Enable soft wrapping
   end,
 })
+
+--
+-- ! imports
+-- lazy loading
+require('kcalixto.lazy')
+require('kcalixto.completion')
+require('kcalixto.lsp')
+require('kcalixto.colorscheme')
+require('leap').create_default_mappings()
 
 --
 -- ! user commands
@@ -282,10 +286,7 @@ function ToggleGooseTerminal()
   end
 end
 
-vim.api.nvim_create_user_command('ToggleGooseTerminal', function()
-  ToggleGooseTerminal()
-end, { desc = "Toggle goose terminal sidebar" })
-
+vim.api.nvim_create_user_command('ToggleGooseTerminal', ToggleGooseTerminal, {})
 vim.api.nvim_set_keymap('n', '<leader>aI', ':ToggleGooseTerminal<CR>', { noremap = true, silent = true })
 
 -- Codex command
@@ -322,7 +323,7 @@ function ToggleCodexTerminal()
     -- codex session -n session-name
     -- codex session -r
     -- codex session -r --name session-name
-    vim.cmd('terminal codex')
+    vim.cmd('terminal codex --approval-mode full-auto')
     -- Store references to the buffer and window
     codex_term_buf = vim.api.nvim_get_current_buf()
     codex_term_win = vim.api.nvim_get_current_win()
@@ -335,8 +336,55 @@ function ToggleCodexTerminal()
   end
 end
 
-vim.api.nvim_create_user_command('ToggleCodexTerminal', function()
-  ToggleCodexTerminal()
-end, { desc = "Toggle codex terminal sidebar" })
-
+vim.api.nvim_create_user_command('ToggleCodexTerminal', ToggleCodexTerminal, {})
 vim.api.nvim_set_keymap('n', '<leader>ai', ':ToggleCodexTerminal<CR>', { noremap = true, silent = true })
+
+-- claude command
+local claude_term_buf = nil
+local claude_term_win = nil
+
+function ToggleClaudeTerminal()
+  local width = 55
+
+  -- If the window exists and is valid, close it
+  if claude_term_win and vim.api.nvim_win_is_valid(claude_term_win) then
+    vim.api.nvim_win_close(claude_term_win, true)
+    claude_term_win = nil
+    return
+  end
+
+  -- If we have a buffer but no window, create a new window
+  if claude_term_buf and vim.api.nvim_buf_is_valid(claude_term_buf) then
+    -- Create a new window on the right
+    vim.cmd('botright vertical split')
+    -- Resize to specified width
+    vim.cmd('vertical resize ' .. width)
+    -- Set the window to use our existing buffer
+    claude_term_win = vim.api.nvim_get_current_win()
+    vim.api.nvim_win_set_buf(claude_term_win, claude_term_buf)
+    -- Enter insert mode
+    vim.cmd('startinsert')
+  else
+    -- Create new window and buffer
+    vim.cmd('botright vertical new')
+    -- Resize to specified width
+    vim.cmd('vertical resize ' .. width)
+    -- Start claude in a terminal
+    -- claude session -n session-name
+    -- claude session -r
+    -- claude session -r --name session-name
+    vim.cmd('terminal claude')
+    -- Store references to the buffer and window
+    claude_term_buf = vim.api.nvim_get_current_buf()
+    claude_term_win = vim.api.nvim_get_current_win()
+    -- Enter insert mode
+    vim.cmd('startinsert')
+
+    -- Set buffer options for the terminal
+    vim.api.nvim_buf_set_option(claude_term_buf, 'bufhidden', 'hide')
+    vim.api.nvim_buf_set_option(claude_term_buf, 'buflisted', false)
+  end
+end
+
+vim.api.nvim_create_user_command('ToggleClaudeTerminal', ToggleClaudeTerminal, {})
+-- vim.api.nvim_set_keymap('n', '<leader>ai', ':ToggleClaudeTerminal<CR>', { noremap = true, silent = true })
