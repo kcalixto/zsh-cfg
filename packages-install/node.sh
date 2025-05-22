@@ -1,1 +1,1 @@
-npm i -g ripnote
+npm i -g @anthropic-ai/claude-code
