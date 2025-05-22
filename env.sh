@@ -60,3 +60,4 @@ export PATH=$PATH:/Users/kaua.calixto/.local/bin
 # Others
 ################################################################################
 export NOTE_PATH="~/go/src/obsidian-vault/main-vault/notes/"
+source "$(brew --prefix)/etc/profile.d/z.sh" 
