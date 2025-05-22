@@ -2,8 +2,8 @@ vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'preview', 'fuzzy' }
 vim.opt.shortmess:append { c = true }
 vim.keymap.set('n', '<space>ss',
   function()
-    vim.lsp.buf.format()
-    -- require('conform').format()
+    -- vim.lsp.buf.format()
+    require('conform').format()
     vim.cmd('w')
     vim.notify('File saved successfully', vim.log.levels.INFO)
   end,
