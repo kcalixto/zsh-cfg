@@ -104,6 +104,13 @@ keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', ns)
 vim.keymap.set("n", "<leader>d", function() -- open diagnostics in a floating window
   vim.diagnostic.open_float(nil, { focus = true })
 end, { desc = "Show diagnostics in a floating window" })
+
+vim.keymap.set('n', '<leader>cd', function()
+  local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
+  if #diagnostics > 0 then
+    vim.fn.setreg('+', diagnostics[1].message)
+  end
+end)
 -- small terminal
 keymap.set('n', '<space>st', function() vim.cmd('below 10split | term') end, ns)
 -- restart lsp
@@ -129,7 +136,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
---
 --
 -- ! user commands
 --
