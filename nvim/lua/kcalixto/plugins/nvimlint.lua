@@ -9,6 +9,20 @@ return {
       typescriptreact = { 'eslint_d' },
     }
 
+    -- Conditionally disable eslint_d if no config found
+    require('lint').linters.eslint_d = require('lint.util').wrap(
+      require('lint').linters.eslint_d,
+      function(diagnostic)
+        if vim.fn.findfile('.eslintrc.js', '.;') == '' and
+            vim.fn.findfile('.eslintrc.json', '.;') == '' and
+            vim.fn.findfile('eslint.config.mjs', '.;') == '' and
+            vim.fn.findfile('eslint.config.js', '.;') == '' then
+          return nil
+        end
+        return diagnostic
+      end
+    )
+
     vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
       callback = function() require('lint').try_lint() end,
     })

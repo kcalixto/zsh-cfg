@@ -17,6 +17,8 @@ return {
           rust = { "rustfmt" },
           python = { "black" },
           cpp = { "clang-formatter" },
+          lua = { "stylua" },
+          ["*"] = { "codespell" },
         },
         format_on_save = false,
       })
