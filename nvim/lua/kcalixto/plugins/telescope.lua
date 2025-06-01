@@ -45,18 +45,28 @@ return {
       vim.api.nvim_set_hl(0, 'TelescopeBorder', { fg = '#e9537a' })
       vim.api.nvim_set_hl(0, 'TelescopeResultsNormal', { fg = '#a7acc7' })
 
-      vim.keymap.set('n', '<space>fh', function() builtin.help_tags() end)
+      vim.keymap.set('n', '<space>fh', function() builtin.help_tags() end, { desc = "Find help tags" })
       -- vim.keymap.set('n', '<space>F', function() builtin.git_files({ cwd = vim.fn.getcwd() }) end)
-      vim.keymap.set('n', '<space>F', function() builtin.find_files({ cwd = vim.fn.getcwd() }) end)
-      vim.keymap.set('n', '<space>fg', function() custom.live_multigrep({ preview = { hide_on_startup = false } }) end)
-      vim.keymap.set('n', '<space>ft', function() builtin.treesitter() end)
-      vim.keymap.set('n', '<space>fb', function() builtin.buffers() end)
+      vim.keymap.set('n', '<space>F', function() builtin.find_files({ cwd = vim.fn.getcwd() }) end, { desc = "Find files" })
+      vim.keymap.set('n', '<space>fg', function() custom.live_multigrep({ preview = { hide_on_startup = false } }) end, { desc = "Live multigrep" })
+      vim.keymap.set('n', '<space>ft', function() builtin.treesitter() end, { desc = "Find treesitter symbols" })
+      vim.keymap.set('n', '<space>fb', function() builtin.buffers() end, { desc = "Find buffers" })
       vim.keymap.set('n', '<space>fd', function()
         builtin.diagnostics(themes.get_ivy({
           severity = 1,
           cwd = vim.fn.getcwd(),
         }))
-      end)
+      end, { desc = "Find diagnostics" })
+      -- list keybinds
+      vim.keymap.set('n', '<space>fk', function()
+        builtin.keymaps(themes.get_dropdown({
+          previewer = false,
+          layout_config = {
+            width = 0.8,
+            height = 0.6,
+          },
+        }))
+      end, { desc = "Find keymaps" })
     end,
   },
 }
