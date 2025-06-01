@@ -37,6 +37,16 @@ vim.diagnostic.config({
     scope = "cursor",
   },
 })
+
+--
+-- ! imports
+-- lazy loading
+require('kcalixto.lazy')
+require('kcalixto.completion')
+require('kcalixto.lsp')
+require('kcalixto.colorscheme')
+require('leap').create_default_mappings()
+
 --
 -- ! keymaps
 --
@@ -120,14 +130,6 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 --
--- ! imports
--- lazy loading
-require('kcalixto.lazy')
-require('kcalixto.completion')
-require('kcalixto.lsp')
-require('kcalixto.colorscheme')
-require('leap').create_default_mappings()
-
 --
 -- ! user commands
 --
@@ -388,3 +390,26 @@ end
 
 vim.api.nvim_create_user_command('ToggleClaudeTerminal', ToggleClaudeTerminal, {})
 -- vim.api.nvim_set_keymap('n', '<leader>ai', ':ToggleClaudeTerminal<CR>', { noremap = true, silent = true })
+
+
+--
+-- ! plugins
+--
+local harpoon = require('harpoon')
+local harpoon_ui = require('harpoon.ui')
+
+-- REQUIRED
+harpoon:setup()
+-- REQUIRED
+
+vim.keymap.set("n", "<leader>aa", function() 
+  harpoon:list():add()
+  vim.notify("Added current file to harpoon", vim.log.levels.INFO)
+end)
+vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+vim.keymap.set("n", "<leader>1", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end)
+
