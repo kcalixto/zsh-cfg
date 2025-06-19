@@ -1,13 +1,18 @@
 ################################################################################
 # Golang
 ################################################################################
-# go version mannager
-# gvm use go1.19 --default
-# [[ -s "/Users/kaua.calixto/.gvm/scripts/gvm" ]] && source "/Users/kaua.calixto/.gvm/scripts/gvm"
-source "/Users/kaua.calixto/.gvm/scripts/gvm"
+start_gvm() {
+    export GVM_ROOT="$HOME/.gvm"
+    if [ -s "$GVM_ROOT/scripts/gvm" ]; then
+        \. "$GVM_ROOT/scripts/gvm"  # This loads gvm
+    else
+        echo "GVM is not installed or not found in $GVM_ROOT"
+    fi
+}
 
 # export GOROOT=/Users/kaua.calixto/.gvm/gos/go1.19
 # export GOROOT_BOOTSTRAP=$GOROOT
+
 # # don't forget to add ssh over https in .gitconfig
 export GOPATH=$HOME/go/src
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
@@ -16,9 +21,16 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 ################################################################################
 # node version mannager
 # install nvm cmd: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+start_nvm() {
+    export NVM_DIR="$HOME/.nvm"
+    if [ -s "$NVM_DIR/nvm.sh" ]; then
+        \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    else
+        echo "NVM is not installed or not found in $NVM_DIR"
+    fi
+}
+
 # npm install -g yarn serverless bun pnpm
 
 # bun completions
@@ -26,7 +38,6 @@ export NVM_DIR="$HOME/.nvm"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-
 
 # react native development
 export ANDROID_HOME=$HOME/Library/Android/sdk

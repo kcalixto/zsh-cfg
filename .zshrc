@@ -1,32 +1,97 @@
-echo ".zshrc loading... (10%)"
-export ZSH="$HOME/.oh-my-zsh"
-export ZSH_CFG_HOME="$HOME/go/src/zsh-cfg" # this repo location in your machine :)
-ZSH_THEME="nicoulaj"
-# frontcube
-# gozilla
-# kolo
-# nicoulaj
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
+#!/bin/zsh
+# =============================================================================
+# ZSH Configuration with Zinit
+# =============================================================================
 
-# start_time=$(python3 -c 'from time import time; print(int(round(time() * 1000)))')
-echo ".zshrc loading... (30%)"
-source $ZSH_CFG_HOME/env.sh
-source $ZSH_CFG_HOME/aliases.sh
-# end_time=$(python3 -c 'from time import time; print(int(round(time() * 1000)))')
-# elapsed_time=$((end_time - start_time))
-# echo "Elapsed time: $elapsed_time milliseconds"
+# Debug logging function
+log_debug() {
+    [[ "$DEBUG" == "true" ]] && echo "$1"
+}
 
-echo ".zshrc loading... (60%)"
-base_folder="$HOME/go/src/zsh-cfg/scripts"
-find "$base_folder" -type f -name "*.sh" | while read -r script; do
-    source "$script"
+# Performance timing
+start_time=$(($(date +%s%N)/1000000))
+
+log_debug "Loading .zshrc with zinit... (10%)"
+
+# =============================================================================
+# Zinit Installation & Setup
+# =============================================================================
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load essential annexes
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
+
+# =============================================================================
+# Theme & Plugins
+# =============================================================================
+
+log_debug "Loading theme and plugins... (20%)"
+
+# Load pure theme
+zinit ice pick"async.zsh" src"pure.zsh" # with zsh-async library that's bundled with it.
+zinit light sindresorhus/pure
+
+# Load plugins with lazy loading
+zinit wait lucid for \
+    OMZ::plugins/git/git.plugin.zsh \
+    zsh-users/zsh-autosuggestions \
+    zsh-users/zsh-syntax-highlighting
+
+# =============================================================================
+# Custom Configuration Files
+# =============================================================================
+
+log_debug "Loading custom configs... (50%)"
+
+export ZSH_CFG_HOME="$HOME/go/src/zsh-cfg"
+
+# Load environment and aliases
+[[ -f "$ZSH_CFG_HOME/env.sh" ]] && source "$ZSH_CFG_HOME/env.sh"
+[[ -f "$ZSH_CFG_HOME/aliases.sh" ]] && source "$ZSH_CFG_HOME/aliases.sh"
+
+# =============================================================================
+# Custom Scripts
+# =============================================================================
+
+log_debug "Loading custom scripts... (70%)"
+
+# Load all custom scripts
+for script in "$ZSH_CFG_HOME"/scripts/*.sh(N); do
+    [[ -r "$script" ]] && source "$script"
 done
 
-echo ".zshrc loading... (90%)"
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# =============================================================================
+# Secrets & Final Setup
+# =============================================================================
 
-echo ".zshrc loaded (100%)"
+log_debug "Loading secrets... (90%)"
 
-source ~/.secrets.sh
+# Load secrets (if exists)
+[[ -f ~/.secrets.sh ]] && source ~/.secrets.sh
 
+# =============================================================================
+# Startup Complete
+# =============================================================================
+
+log_debug ".zshrc loaded (100%)"
+end_time=$(($(date +%s%N)/1000000))
+
+echo "⚡ Startup time: $((end_time - start_time))ms"
