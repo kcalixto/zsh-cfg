@@ -80,6 +80,15 @@ keymap.set("n", "<leader>to", ":tabnew<CR>", ns)    -- open new tab
 keymap.set("n", "<leader>tx", ":tabclose<CR>", ns)  -- close current tab
 keymap.set("n", "<leader>tn", ":tabn<CR>", ns)      -- go to next tab
 keymap.set("n", "<leader>tp", ":tabp<CR>", ns)      -- go to previous tab
+keymap.set("n", "<leader>t1", ":tabn 1<CR>", ns)    -- go to first tab
+keymap.set("n", "<leader>t2", ":tabn 2<CR>", ns)    -- go to second tab
+keymap.set("n", "<leader>t3", ":tabn 3<CR>", ns)    -- go to third tab
+keymap.set("n", "<leader>t4", ":tabn 4<CR>", ns)    -- go to fourth tab
+keymap.set("n", "<leader>t5", ":tabn 5<CR>", ns)    -- go to fifth tab
+keymap.set("n", "<leader>t6", ":tabn 6<CR>", ns)    -- go to sixth tab
+keymap.set("n", "<leader>t7", ":tabn 7<CR>", ns)    -- go to seventh tab
+keymap.set("n", "<leader>t8", ":tabn 8<CR>", ns)    -- go to eighth tab
+keymap.set("n", "<leader>t9", ":tabn 9<CR>", ns)    -- go to ninth tab
 keymap.set("n", "<leader>tt", ":tabedit %<CR>", ns) -- opens current buffer in another tab (kinda temp fullscreen hack)
 -- motion
 keymap.set("n", "<M-h>", "<C-\\><C-n><C-w>h", ns)
@@ -441,7 +450,7 @@ local harpoon_ui = require('harpoon.ui')
 harpoon:setup()
 -- REQUIRED
 
-vim.keymap.set("n", "<leader>aa", function() 
+vim.keymap.set("n", "<leader>aa", function()
   harpoon:list():add()
   vim.notify("Added current file to harpoon", vim.log.levels.INFO)
 end)
@@ -451,4 +460,3 @@ vim.keymap.set("n", "<leader>1", function() harpoon:list():select(1) end)
 vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end)
 vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end)
 vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end)
-
