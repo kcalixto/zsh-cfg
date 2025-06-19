@@ -319,6 +319,9 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'go',
   callback = function()
     vim.api.nvim_create_user_command("GoGenerate", GoGenerate, {})
+    vim.api.nvim_buf_set_keymap(0, 'n', '<C-i>', ':GoImport<CR>', {})
+    vim.api.nvim_buf_set_keymap(0, 'n', '<C-t>', ':GoTestPkg<CR>', {})
+    vim.api.nvim_buf_set_keymap(0, 'n', '<C-c>', ':GoCoverage -p<CR>', {})
   end,
 })
 

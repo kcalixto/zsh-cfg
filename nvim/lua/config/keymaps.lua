@@ -1,17 +1,23 @@
 local harpoon = require('harpoon')
 local ns = { noremap = true, silent = true }
---
--- ! keymaps
---
+
+vim.keymap.set('n', '<space>ss', function()
+  -- vim.lsp.buf.format()
+  require('conform').format()
+  vim.cmd('w')
+  vim.notify('File saved successfully', vim.log.levels.INFO)
+end, {})
+
+vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', ns)
+vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', ns)
+vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', ns)
+
 vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>", ns)
 vim.keymap.set("n", "<space>x", ":.lua<CR>", ns)
 vim.keymap.set("v", "<space>x", ":lua<CR>", ns)
 vim.keymap.set('n', '<C-w>_', '<cmd>vs eadirection=hor<CR>', ns)
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", ns)     -- exit terminal with esc
 vim.keymap.set('n', '<Leader><CR>', ':noh<CR>', ns) -- Clear highlight
--- vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', ns)
--- vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', ns)
--- vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', ns)
 vim.keymap.set('n', '<leader>+', '<C-a>', ns) -- increment number
 vim.keymap.set('n', '<leader>-', '<C-x>', ns) -- decrement number
 vim.keymap.set('n', '<space><space><space>', 'o<esc>30i<CR><esc>', ns)
@@ -96,3 +102,6 @@ vim.keymap.set("n", "<leader>1", function() harpoon:list():select(1) end)
 vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end)
 vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end)
 vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end)
+
+-- oil.nvim
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })

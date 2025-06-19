@@ -17,9 +17,7 @@ end
 vim.opt.rtp:prepend(lazypath) -- puts lazy in neovim runtimepath
 
 require("lazy").setup(
-  {
-    import = 'kcalixto.plugins',
-  },
+  { import = 'plugins' },
   {
     change_detection = {
       notify = false,

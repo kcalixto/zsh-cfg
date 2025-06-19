@@ -18,7 +18,7 @@ alias gm="git merge --no-edit"
 alias gmm="git merge main --no-edit"
 alias goinit="go mod init && go mod tidy"
 alias src="source ~/.zshrc"
-alias v="nvim ."
+alias v="nvim"
 
 # https://www.reddit.com/r/git/comments/avv34g/nicer_gitstatus/
 gs() {

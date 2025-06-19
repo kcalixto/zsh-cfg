@@ -1,5 +1,7 @@
 local opt = vim.opt
 
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'preview', 'fuzzy' }
+vim.opt.shortmess:append { c = true }
 -- tabs & spacing
 opt.tabstop = 4
 opt.expandtab = true
@@ -24,9 +26,3 @@ opt.shellcmdflag = "-i -c"        -- -i interative, -c ensures the shell runs th
 vim.o.undofile = true
 opt.shortmess:append { A = true } -- avoid all the |hit-enter| prompts caused by file
 opt.fillchars = { eob = " " }
-vim.diagnostic.config({
-  float = {
-    source = 'if_many',
-    scope = "cursor",
-  },
-})
