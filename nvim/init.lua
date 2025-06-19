@@ -156,14 +156,36 @@ vim.api.nvim_create_user_command("GoGenerate", GoGenerate, { desc = "Run go gene
 -- Notes command
 local notes_term_buf = -1
 local notes_term_win = -1
-local note_file = vim.fn.expand('$NOTE_PATH/_todo.md') -- precompute to avoid slow execution
+local notes_dir = vim.fn.expand('$NOTE_PATH/') -- precompute to avoid slow execution
 
-local function Notes()
+local function Notes(opts)
   local width = 45
 
   -- If the window exists and is valid, close it
   if notes_term_buf and vim.api.nvim_win_is_valid(notes_term_win) then
-    vim.cmd('w ' .. note_file) -- save file
+    -- Save all modified buffers that are markdown files in the notes directory
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      if vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_get_option(buf, 'modified') then
+        local buf_name = vim.api.nvim_buf_get_name(buf)
+        if buf_name:match('%.md$') and buf_name:find(notes_dir, 1, true) then
+          vim.api.nvim_buf_call(buf, function()
+            vim.cmd('write')
+          end)
+        end
+      end
+    end
+
+    -- Close all buffers in the notes directory
+    local files_in_notes_dir = vim.fn.glob(notes_dir .. '*.md')
+    for _, file in ipairs(vim.split(files_in_notes_dir, '\n')) do
+      if file ~= '' then
+        local buf = vim.fn.bufnr(file)
+        if buf ~= -1 and vim.api.nvim_buf_is_valid(buf) then
+          vim.api.nvim_buf_delete(buf, { force = true })
+        end
+      end
+    end
+
     vim.api.nvim_win_close(notes_term_win, true)
     notes_term_win = -1
     return
@@ -183,7 +205,12 @@ local function Notes()
     -- Resize to specified width
     vim.cmd('vertical resize ' .. width)
 
-    vim.cmd('e ' .. note_file) -- Use the precomputed path
+    local notes_file = notes_dir
+    if opts.file_name then
+      -- If a file name is provided, use it
+      notes_file = notes_dir .. opts.file_name
+    end
+    vim.cmd('e ' .. notes_file) -- Use the precomputed path
 
     -- Store references to the buffer and window
     notes_term_buf = vim.api.nvim_get_current_buf()
@@ -194,7 +221,13 @@ local function Notes()
     vim.api.nvim_buf_set_option(notes_term_buf, 'buflisted', false)
   end
 end
+
 vim.api.nvim_create_user_command("Notes", Notes, { desc = "Open notes" })
+vim.api.nvim_create_user_command("NotesTempFile", function()
+  local file_name = os.date('%Y-%m-%d_%H-%M-%S')   -- use current date and time as file name
+  local temp_file = '/tmp/' .. file_name .. '.md'
+  Notes({ file_name = temp_file })                 -- open the temp file in notes
+end, { desc = "create temp file and opens" })
 vim.keymap.set('n', '<leader>n', ':Notes<CR>', ns)
 
 -- CopyFilePath command
@@ -252,7 +285,7 @@ end, { desc = "Delete hidden buffers" })
 local goose_term_buf = nil
 local goose_term_win = nil
 function ToggleGooseTerminal()
-  local width = 55
+  local width = 65
 
   -- If the window exists and is valid, close it
   if goose_term_win and vim.api.nvim_win_is_valid(goose_term_win) then
@@ -302,7 +335,7 @@ local codex_term_buf = nil
 local codex_term_win = nil
 
 function ToggleCodexTerminal()
-  local width = 55
+  local width = 65
 
   -- If the window exists and is valid, close it
   if codex_term_win and vim.api.nvim_win_is_valid(codex_term_win) then
@@ -352,7 +385,7 @@ local claude_term_buf = nil
 local claude_term_win = nil
 
 function ToggleClaudeTerminal()
-  local width = 55
+  local width = 65
 
   -- If the window exists and is valid, close it
   if claude_term_win and vim.api.nvim_win_is_valid(claude_term_win) then
