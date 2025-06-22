@@ -1,73 +1,114 @@
 return {
   {
-      'saghen/blink.cmp',
-      event = "InsertEnter", -- Load when entering Insert mode
-      version = '*',
-      opts = {
-          keymap = {
-              ['<C-y>'] = { 'accept', 'fallback' }, -- ensure enter directly accepts
-          },
+    "saghen/blink.cmp",
+    event = "InsertEnter", -- Load when entering Insert mode
+    dependencies = {
+      "xzbdmw/colorful-menu.nvim",
+      "echasnovski/mini.icons",
+    },
+    version = "*",
+    opts_extend = { "sources.default" },
+    config = function(_, opts)
+      local colorful_menu = require("colorful-menu")
+      local mini_icons = require("mini.icons")
+      local blink = require("blink.cmp")
 
-          appearance = {
-              use_nvim_cmp_as_default = false,
-              nerd_font_variant = 'mono',
+      colorful_menu.setup({
+        ls = {
+          lua_ls = { arguments_hl = "@comment" },
+          gopls = {
+            align_type_to_right = false,
+            add_colon_before_type = true,
+            preserve_type_when_truncate = true,
           },
+          ts_ls = { extra_info_hl = "@comment" },
+          fallback = true,
+          fallback_extra_info_hl = "@comment",
+        },
+        fallback_highlight = "@variable",
+        max_width = 60, -- between 0 and 1, it'll be treated as percentage of the width of the window
+      })
 
-          completion = {
-              menu = {
-                  auto_show = true,
-                  draw = {
-                      columns = {
-                          { "label",     "label_description", gap = 1 },
-                          { "kind_icon", "kind",              gap = 2 },
-                      },
-                  },
+      blink.setup({
+        keymap = {
+          ["<C-y>"] = { "accept", "fallback" }, -- ensure enter directly accepts
+        },
+
+        appearance = {
+          use_nvim_cmp_as_default = false,
+          nerd_font_variant = "mono",
+        },
+
+        completion = {
+          menu = {
+            auto_show = true,
+            draw = {
+              columns = { -- List of available components: label, label_description, source_name, source_id, kind, kind_icon
+                { "kind_icon", gap = 1 },
+                { "label", gap = 1 },
+                { "kind", gap = 1 },
               },
-              documentation = {
-                  window = {
-                      border = "rounded",
-                      winblend = 0,
-                      max_width = 80,  -- limit max width of the documentation window for better readability
-                      max_height = 20, -- limit max height for documentation window
-                  },
+              components = {
+                label = {
+                  text = function(ctx)
+                    return colorful_menu.blink_components_text(ctx)
+                  end,
+                  highlight = function(ctx)
+                    return colorful_menu.blink_components_highlight(ctx)
+                  end,
+                },
+                kind_icon = {
+                  text = function(ctx)
+                    local kind_icon, _, _ = mini_icons.get("lsp", ctx.kind)
+                    return kind_icon
+                  end,
+                  -- (optional) use highlights from mini.icons
+                  highlight = function(ctx)
+                    local _, hl, _ = mini_icons.get("lsp", ctx.kind)
+                    return hl
+                  end,
+                },
+                kind = {
+                  -- (optional) use highlights from mini.icons
+                  highlight = function(ctx)
+                    local _, hl, _ = mini_icons.get("lsp", ctx.kind)
+                    return hl
+                  end,
+                },
               },
+            },
           },
+          documentation = {
+            window = {
+              border = "rounded",
+              winblend = 0,
+              max_width = 80, -- limit max width of the documentation window for better readability
+              max_height = 20, -- limit max height for documentation window
+            },
+          },
+        },
 
-          signature = {
-              enabled = true,
-              window = {
-                  border = "rounded",
-                  winblend = 0,
-              },
+        signature = {
+          enabled = true,
+          window = {
+            border = "rounded",
+            winblend = 0,
           },
+        },
 
-          sources = {
-              default = { 'lsp', 'path', 'buffer' },
-              providers = {},
-          },
-      },
-      opts_extend = { "sources.default" }
-  },
-  {
-    event = 'VeryLazy',
-    'stevearc/conform.nvim',
-    opts = {},
-    config = function()
-      require('conform').setup({
-        formatters_by_ft = {
-          css = { 'prettier' },
-          scss = { 'prettier' },
-          go = { 'goimports', 'gofmt' },
-          rust = { 'rustfmt' },
-          python = { 'black' },
-          javascript = { 'prettier' },
-          typescript = { 'prettier' },
+        sources = {
+          default = { "lsp", "path", "buffer" },
+          providers = {},
         },
       })
-    end
+    end,
   },
   {
-    event = 'BufReadPost',
-    'github/copilot.vim',
+    event = "VeryLazy",
+    "stevearc/conform.nvim",
+  },
+  {
+    event = "BufReadPost",
+    "github/copilot.vim",
   },
 }
