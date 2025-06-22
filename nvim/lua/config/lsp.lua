@@ -30,11 +30,11 @@ local install_formatters = {
   "gofmt",
   "black",
   "stylua",
-  "codespell",
 }
+
 conform.setup({
   default_format_opts = {
-    timeout_ms = 5000, -- Default timeout for formatters
+    timeout_ms = 1500, -- Default timeout for formatters
     -- lsp_format = "fallback", -- Use LSP formatting as a fallback
   },
   formatters_by_ft = {
@@ -53,8 +53,6 @@ conform.setup({
     python = { "black" },
 
     lua = { "stylua" },
-
-    ["*"] = { "codespell" },
   },
   format_on_save = false,
 })
