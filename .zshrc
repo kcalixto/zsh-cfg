@@ -55,6 +55,10 @@ zinit wait lucid for \
     zsh-users/zsh-autosuggestions \
     zsh-users/zsh-syntax-highlighting
 
+zinit light zsh-users/zsh-history-substring-search
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
+
 # =============================================================================
 # Custom Configuration Files
 # =============================================================================
