@@ -1,7 +1,7 @@
-local pickers = require 'telescope.pickers'
-local finders = require 'telescope.finders'
-local make_entry = require 'telescope.make_entry'
-local conf = require 'telescope.config'.values
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
+local make_entry = require("telescope.make_entry")
+local conf = require("telescope.config").values
 
 local M = {}
 
@@ -9,7 +9,7 @@ local live_multigrep = function(opts)
   opts = opts or {}
   opts.cwd = opts.cwd or vim.uv.cwd()
 
-  local finder = finders.new_async_job {
+  local finder = finders.new_async_job({
     command_generator = function(prompt)
       if not prompt or prompt == "" then
         return nil
@@ -19,49 +19,51 @@ local live_multigrep = function(opts)
       local args = { "rg" } -- ripgrep
 
       if pieces[1] then
-        table.insert(args, '-e')
+        table.insert(args, "-e")
         table.insert(args, pieces[1])
       end
 
       if pieces[2] then
-        table.insert(args, '-g')
+        table.insert(args, "-g")
         table.insert(args, pieces[2])
       end
 
       -- js lock files
-      table.insert(args, '-g')
-      table.insert(args, '!*-lock.json')
-      table.insert(args, '-g')
-      table.insert(args, '!*.lock')
+      table.insert(args, "-g")
+      table.insert(args, "!*-lock.json")
+      table.insert(args, "-g")
+      table.insert(args, "!*.lock")
       -- go sum files
       -- table.insert(args, '-g')
       -- table.insert(args, '!*.mod')
-      table.insert(args, '-g')
-      table.insert(args, '!*.sum')
+      table.insert(args, "-g")
+      table.insert(args, "!*.sum")
 
-      return vim.tbl_flatten {
+      return vim.tbl_flatten({
         args,
         {
-          '--color=never',
-          '--no-heading',
-          '--with-filename',
-          '--line-number',
-          '--column',
-          '--smart-case',
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--smart-case",
         },
-      }
+      })
     end,
     entry_maker = make_entry.gen_from_vimgrep(opts),
     cwd = opts.cwd,
-  }
+  })
 
-  pickers.new(opts, {
-    debounce = 100, -- wait character type
-    prompt_title = 'Multi Grep',
-    finder = finder,
-    previewer = conf.grep_previewer(opts),
-    sorter = require('telescope.sorters').empty(), -- do not sort
-  }):find()
+  pickers
+    .new(opts, {
+      debounce = 100, -- wait character type
+      prompt_title = "Multi Grep",
+      finder = finder,
+      previewer = conf.grep_previewer(opts),
+      sorter = require("telescope.sorters").empty(), -- do not sort
+    })
+    :find()
 end
 
 M.live_multigrep = live_multigrep

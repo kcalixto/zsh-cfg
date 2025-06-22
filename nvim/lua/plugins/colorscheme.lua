@@ -1,11 +1,11 @@
 return {
-  { 'projekt0n/github-nvim-theme' },
+  { "projekt0n/github-nvim-theme" },
   {
-    'Djancyp/better-comments.nvim',
+    "Djancyp/better-comments.nvim",
     enabled = true,
     event = "BufRead",
     config = function()
-      require('better-comment').Setup {
+      require("better-comment").Setup({
         tags = {
           {
             name = "TODO",
@@ -55,9 +55,9 @@ return {
             bg = "#0a7aca",
             bold = false,
             virtual_text = "",
-          }
-        }
-      }
-    end
-  }
+          },
+        },
+      })
+    end,
+  },
 }
