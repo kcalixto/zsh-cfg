@@ -15,7 +15,7 @@ return {
         defaults = {
           path_display = {
             -- 'shorten',
-            "smart",
+            "truncate",
           },
           mappings = {
             i = {
