@@ -11,6 +11,7 @@ end, {})
 vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", ns)
 vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", ns)
 vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", ns)
+vim.keymap.set("n", "<Leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", ns)
 
 vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>", ns)
 vim.keymap.set("n", "<space>x", ":.lua<CR>", ns)
@@ -81,7 +82,7 @@ vim.keymap.set("n", "<leader>cd", function()
 end)
 
 -- small terminal
-vim.keymap.set("n", "<space>st", function()
+vim.keymap.set("n", "<leader>st", function()
   vim.cmd("below 10split | term")
 end, ns)
 
