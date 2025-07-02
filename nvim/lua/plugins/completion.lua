@@ -26,7 +26,7 @@ return {
           fallback_extra_info_hl = "@comment",
         },
         fallback_highlight = "@variable",
-        max_width = 60, -- between 0 and 1, it'll be treated as percentage of the width of the window
+        max_width = 0.6, -- between 0 and 1, it'll be treated as percentage of the width of the window
       })
 
       blink.setup({
