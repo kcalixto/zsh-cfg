@@ -118,3 +118,11 @@ end)
 
 -- oil.nvim
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
+-- codecompanion & ai commands
+-- vim.api.nvim_set_keymap('n', '<leader>ai', ':ToggleClaudeTerminal<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "<leader>ai", ":ToggleCodexTerminal<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>aI", ":ToggleGooseTerminal<CR>", { noremap = true, silent = true })
+-- vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>ai", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
