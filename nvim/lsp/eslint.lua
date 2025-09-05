@@ -1,7 +1,7 @@
 return {
   cmd = { "vscode-eslint-language-server", "--stdio" },
   filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-  root_markers = { "eslint.config.mjs", "package.json", ".git" },
+  root_markers = { "eslint.config.mjs" },
   init_options = {
     hostInfo = "neovim",
   },
