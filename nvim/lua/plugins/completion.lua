@@ -31,7 +31,7 @@ return {
 
       blink.setup({
         keymap = {
-          ["<C-y>"] = { "accept", "fallback" }, -- ensure enter directly accepts
+          ["<C-y>"] = { "accept", "fallback" },
         },
 
         appearance = {
@@ -110,5 +110,10 @@ return {
   {
     event = "BufReadPost",
     "github/copilot.vim",
+    -- change Tab to <C-Tab> to avoid conflict with blink.cmp
+    -- config = function()
+    --   vim.g.copilot_no_tab_map = true
+    --   vim.keymap.set("i", "<M-Tab>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
+    -- end,
   },
 }
