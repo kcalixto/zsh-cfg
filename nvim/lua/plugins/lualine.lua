@@ -29,7 +29,19 @@ return {
             },
           },
         },
-        lualine_x = { "encoding", "fileformat", "filetype" },
+        lualine_x = {
+          { -- show current buffer position and total buffers
+            function()
+              local current_buf = vim.api.nvim_get_current_buf()
+              local total_bufs = #vim.api.nvim_list_bufs()
+
+              return "b " .. current_buf .. "  bn " .. total_bufs .. "  |"
+            end,
+          },
+          "encoding",
+          "fileformat",
+          "filetype",
+        },
         lualine_y = { "progress" },
         lualine_z = { "location" },
       },
