@@ -1,12 +1,31 @@
 local harpoon = require("harpoon")
+local conform = require("conform")
 local ns = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<space>ss", function()
-  -- vim.lsp.buf.format()
-  require("conform").format()
+  -- local clients = vim.lsp.get_active_clients({ name = "ts_ls" })
+  -- if #clients > 0 then
+  --   clients[1].request("workspace/executeCommand", {
+  --     command = "_typescript.organizeImports",
+  --     arguments = { vim.api.nvim_buf_get_name(0) },
+  --   }, function(err)
+  --     if err then
+  --       vim.notify("Error organizing imports: " .. err.message, vim.log.levels.WARN)
+  --     end
+  --
+  --     -- Always proceed with formatting and saving
+  --     conform.format({ async = true })
+  --     vim.cmd("w")
+  --     vim.notify("File saved successfully", vim.log.levels.INFO)
+  --   end)
+  -- else
+  conform.format()
   vim.cmd("w")
   vim.notify("File saved successfully", vim.log.levels.INFO)
+  -- end
 end, {})
+
+vim.keymap.set("n", "cc", "c$", ns) -- change to end of line
 
 vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", ns)
 vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", ns)
@@ -114,6 +133,24 @@ vim.keymap.set("n", "<leader>3", function()
 end)
 vim.keymap.set("n", "<leader>4", function()
   harpoon:list():select(4)
+end)
+vim.keymap.set("n", "<leader>5", function()
+  harpoon:list():select(5)
+end)
+vim.keymap.set("n", "<leader>6", function()
+  harpoon:list():select(6)
+end)
+vim.keymap.set("n", "<leader>7", function()
+  harpoon:list():select(7)
+end)
+vim.keymap.set("n", "<leader>8", function()
+  harpoon:list():select(8)
+end)
+vim.keymap.set("n", "<leader>9", function()
+  harpoon:list():select(9)
+end)
+vim.keymap.set("n", "<leader>0", function()
+  harpoon:list():select(10)
 end)
 
 -- oil.nvim

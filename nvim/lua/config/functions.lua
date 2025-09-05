@@ -275,6 +275,17 @@ function ToggleClaudeTerminal()
   end
 end
 
+-- TS Language Server commands
+function TSOrganizeImports()
+  local clients = vim.lsp.get_active_clients({ name = "ts_ls" })
+  if #clients > 0 then
+    clients[1].request("workspace/executeCommand", {
+      command = "_typescript.organizeImports",
+      arguments = { vim.api.nvim_buf_get_name(0) },
+    })
+  end
+end
+
 -- on startup
 vim.api.nvim_create_autocmd("UIEnter", {
   callback = function()
@@ -293,10 +304,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
     vim.api.nvim_create_user_command("ToggleClaudeTerminal", ToggleClaudeTerminal, {})
     vim.api.nvim_create_user_command("ToggleCodexTerminal", ToggleCodexTerminal, {})
     vim.api.nvim_create_user_command("ToggleGooseTerminal", ToggleGooseTerminal, {})
-
-    -- vim.api.nvim_set_keymap('n', '<leader>ai', ':ToggleClaudeTerminal<CR>', { noremap = true, silent = true })
-    vim.api.nvim_set_keymap("n", "<leader>ai", ":ToggleCodexTerminal<CR>", { noremap = true, silent = true })
-    vim.api.nvim_set_keymap("n", "<leader>aI", ":ToggleGooseTerminal<CR>", { noremap = true, silent = true })
   end,
 })
 
@@ -322,5 +329,17 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.api.nvim_buf_set_keymap(0, "n", "<C-i>", ":GoImport<CR>", {})
     vim.api.nvim_buf_set_keymap(0, "n", "<C-t>", ":GoTestPkg<CR>", {})
     vim.api.nvim_buf_set_keymap(0, "n", "<C-c>", ":GoCoverage -p<CR>", {})
+  end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+  },
+  callback = function()
+    vim.api.nvim_create_user_command("TSOrganizeImports", TSOrganizeImports, {})
+    vim.api.nvim_buf_set_keymap(0, "n", "<C-i>", ":TSOrganizeImports<CR>", {})
   end,
 })
