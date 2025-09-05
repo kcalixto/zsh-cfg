@@ -7,6 +7,7 @@ return {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
       { "nvim-treesitter/nvim-treesitter-context" },
       { "nvim-treesitter/playground" },
+      { "OXY2DEV/markview.nvim" },
     },
     config = function()
       require("nvim-treesitter.configs").setup({
@@ -48,10 +49,28 @@ return {
             },
           },
         },
-        context = {
-          enable = true,
-          throttle = true,
+      })
+
+      require("treesitter-context").setup({
+        enable = true,
+        max_lines = 3,
+        trim_scope = "outer",
+        min_window_height = 20,
+        patterns = {
+          default = {
+            "class",
+            "function",
+            "method",
+            "for",
+            "while",
+            "if",
+            "switch",
+            "case",
+          },
         },
+        zindex = 20,
+        mode = "cursor",
+        separator = nil,
       })
     end,
   },
