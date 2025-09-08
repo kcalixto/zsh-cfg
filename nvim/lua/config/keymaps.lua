@@ -31,6 +31,18 @@ vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", ns)
 vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", ns)
 vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", ns)
 vim.keymap.set("n", "<Leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", ns)
+-- Notes keymaps
+local notes = require("utils.notes")
+vim.keymap.set("n", "<leader>an", function()
+  vim.ui.input({ prompt = "New note: " }, function(input)
+    if input and input ~= "" then
+      notes.add_note(input)
+    end
+  end)
+end, { desc = "Add new note" })
+vim.keymap.set("n", "<leader>n", function()
+  notes.read_notes()
+end, { desc = "Read all notes" })
 
 vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>", ns)
 vim.keymap.set("n", "<space>x", ":.lua<CR>", ns)

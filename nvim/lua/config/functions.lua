@@ -60,81 +60,6 @@ local GoGenerate = function() -- execute go generate in the current directory
   end
 end
 
--- Notes command
--- local notes_term_buf = -1
--- local notes_term_win = -1
--- local notes_dir = vim.fn.expand('$NOTE_PATH/') -- precompute to avoid slow execution
---
--- local function Notes(opts)
---   local width = 45
---
---   -- If the window exists and is valid, close it
---   if notes_term_buf and vim.api.nvim_win_is_valid(notes_term_win) then
---     -- Save all modified buffers that are markdown files in the notes directory
---     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
---       if vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_get_option(buf, 'modified') then
---         local buf_name = vim.api.nvim_buf_get_name(buf)
---         if buf_name:match('%.md$') and buf_name:find(notes_dir, 1, true) then
---           vim.api.nvim_buf_call(buf, function()
---             vim.cmd('write')
---           end)
---         end
---       end
---     end
---
---     -- Close all buffers in the notes directory
---     local files_in_notes_dir = vim.fn.glob(notes_dir .. '*.md')
---     for _, file in ipairs(vim.split(files_in_notes_dir, '\n')) do
---       if file ~= '' then
---         local buf = vim.fn.bufnr(file)
---         if buf ~= -1 and vim.api.nvim_buf_is_valid(buf) then
---           vim.api.nvim_buf_delete(buf, { force = true })
---         end
---       end
---     end
---
---     vim.api.nvim_win_close(notes_term_win, true)
---     notes_term_win = -1
---     return
---   end
---
---   if notes_term_buf and vim.api.nvim_buf_is_valid(notes_term_buf) then
---     -- Create a new window on the right
---     vim.cmd('botright vertical split')
---     -- Resize to specified width
---     vim.cmd('vertical resize ' .. width)
---     -- Set the window to use our existing buffer
---     notes_term_win = vim.api.nvim_get_current_win()
---     vim.api.nvim_win_set_buf(notes_term_win, notes_term_buf)
---   else
---     -- Create new window and buffer
---     vim.cmd('botright vertical new')
---     -- Resize to specified width
---     vim.cmd('vertical resize ' .. width)
---
---     local notes_file = notes_dir
---     if opts.file_name then
---       -- If a file name is provided, use it
---       notes_file = notes_dir .. opts.file_name
---     end
---     vim.cmd('e ' .. notes_file) -- Use the precomputed path
---
---     -- Store references to the buffer and window
---     notes_term_buf = vim.api.nvim_get_current_buf()
---     notes_term_win = vim.api.nvim_get_current_win()
---
---     -- Set buffer options
---     vim.api.nvim_buf_set_option(notes_term_buf, 'bufhidden', 'hide')
---     vim.api.nvim_buf_set_option(notes_term_buf, 'buflisted', false)
---   end
--- end
---
--- local function NotesTempFile()
---   local file_name = os.date('%Y-%m-%d_%H-%M-%S')   -- use current date and time as file name
---   local temp_file = '/tmp/' .. file_name .. '.md'
---   Notes({ file_name = temp_file })                 -- open the temp file in notes
--- end
-
 -- Goose command
 local goose_term_buf = nil
 local goose_term_win = nil
@@ -290,10 +215,6 @@ end
 vim.api.nvim_create_autocmd("UIEnter", {
   callback = function()
     vim.api.nvim_create_user_command("Mock", Mock, {})
-    -- vim.api.nvim_create_user_command("Notes", Notes, {})
-    -- vim.api.nvim_create_user_command("NotesTempFile", NotesTempFile, {})
-
-    vim.keymap.set("n", "<leader>n", ":Notes<CR>")
   end,
 })
 
