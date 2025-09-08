@@ -87,6 +87,9 @@ vim.keymap.set("n", "<C-W><C-h>", ":vertical resize -15<CR>", ns) -- decrement w
 vim.keymap.set("n", "<C-W><C-j>", ":horizontal resize +10<CR>", ns) -- increment window size
 vim.keymap.set("n", "<C-W><C-k>", ":horizontal resize -10<CR>", ns) -- decrement window size
 
+-- git
+vim.keymap.set("n", "<C-g>", ":G<CR>", ns) -- opens lazygit
+
 -- diagnostics
 vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", ns)
 vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", ns)
