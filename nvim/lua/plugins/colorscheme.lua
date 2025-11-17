@@ -1,5 +1,6 @@
 return {
   { "projekt0n/github-nvim-theme" },
+  { "atmosuwiryo/vim-winteriscoming" },
   {
     "Djancyp/better-comments.nvim",
     enabled = true,
