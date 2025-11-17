@@ -116,4 +116,10 @@ return {
     --   vim.keymap.set("i", "<M-Tab>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
     -- end,
   },
+  {
+    event = "BufReadPost",
+    "ellisonleao/glow.nvim",
+    config = true,
+    cmd = "Glow",
+  },
 }
