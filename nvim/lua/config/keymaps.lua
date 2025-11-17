@@ -36,6 +36,7 @@ vim.keymap.set("n", "<space>x", ":.lua<CR>", ns)
 vim.keymap.set("v", "<space>x", ":lua<CR>", ns)
 vim.keymap.set("n", "<C-w>_", "<cmd>vs eadirection=hor<CR>", ns)
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", ns) -- exit terminal with esc
+vim.keymap.set("t", "<C-[>", "<C-\\><C-n>", ns) -- send escape to terminal
 vim.keymap.set("n", "<Leader><CR>", ":noh<CR>", ns) -- Clear highlight
 vim.keymap.set("n", "<leader>+", "<C-a>", ns) -- increment number
 vim.keymap.set("n", "<leader>-", "<C-x>", ns) -- decrement number
@@ -165,3 +166,45 @@ vim.api.nvim_set_keymap("n", "<leader>aI", ":ToggleGooseTerminal<CR>", { noremap
 -- vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
 vim.keymap.set({ "n", "v" }, "<leader>ai", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
 vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+
+-- Just messing around w/ some custom mappings
+vim.keymap.set("n", "|", function()
+  -- split tab vertically
+  vim.cmd("vsplit")
+  -- focus on the new split
+  vim.cmd("lua require'oil'.open_float()")
+end, ns)
+vim.keymap.set("n", "\\", function()
+  -- split tab vertically
+  vim.cmd("vsplit")
+  -- open telecope file grep
+  local telescope = require("telescope.builtin")
+  telescope.find_files()
+end, ns)
+
+require("leap").create_default_mappings()
+-- take what is selected in visual mode and open in telescope file_grep
+vim.keymap.set("v", "s", function()
+  -- local selected_text = vim.fn.getreg("\"") -- get selected text
+  local selected_text = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."))
+  selected_text = table.concat(selected_text, " ")
+  vim.notify(selected_text)
+  selected_text = selected_text:gsub("\n", "") -- remove newlines
+  local telescope = require("telescope.builtin")
+  telescope.live_grep({ default_text = selected_text })
+end, ns)
+
+vim.keymap.set("n", "!", function()
+  -- reload the current file
+  vim.cmd("e!")
+end, ns)
+
+-- vim.keymap.set("n", "f", function()
+--   -- split tab vertically
+--   vim.cmd("vsplit")
+--   -- open telescope find files
+--   local telescope = require("telescope.builtin")
+--   telescope.find_files()
+-- end, ns) -- disable default 'e' behavior
+vim.keymap.set("n", "Q", "q", { noremap = true }) -- Remap Q to start recording a macro
+vim.keymap.set("n", "q", ":wq<CR>", { noremap = true }) -- Remap q to save and quit
