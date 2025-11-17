@@ -5,6 +5,7 @@ ln .zshrc ~/.zshrc
 ln .tmux.conf ~/.tmux.conf
 ln .gitconfig ~/.gitconfig
 ln .goosehints ~/.config/goose/.goosehints
+ln mcphub/servers.json ~/.config/mcphub/servers.json
 ```
 
 # to use npm private packages
