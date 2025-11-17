@@ -82,28 +82,21 @@ local install_formatters = {
 }
 
 conform.setup({
-  default_format_opts = {
-    timeout_ms = 1500, -- Default timeout for formatters
-    -- lsp_format = "fallback", -- Use LSP formatting as a fallback
-  },
+  default_format_opts = { timeout_ms = 2000 },
+  format_on_save = false,
   formatters_by_ft = {
-    css = { "prettier", stop_after_first = true },
-    scss = { "prettier", stop_after_first = true },
-    html = { "prettier", stop_after_first = true },
-    javascript = { "prettier", stop_after_first = true },
-    javascriptreact = { "prettier", stop_after_first = true },
-    typescript = { "prettier", stop_after_first = true },
-    typescriptreact = { "prettier", stop_after_first = true },
-
-    json = { "prettier", stop_after_first = true },
-
-    go = { "goimports", "gofmt" },
-
+    css = { "prettier" },
+    scss = { "prettier" },
+    html = { "prettier" },
+    javascript = { "prettier" },
+    javascriptreact = { "prettier" },
+    typescript = { "prettier" },
+    typescriptreact = { "prettier" },
+    json = { "prettier" },
+    go = { "gofmt", "goimports" },
     python = { "black" },
-
     lua = { "stylua" },
   },
-  format_on_save = false,
 })
 
 -- Mason installation

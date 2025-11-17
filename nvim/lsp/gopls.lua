@@ -8,6 +8,7 @@ return {
       staticcheck = true,
       analyses = {
         unusedparams = true,
+        fillstruct = true,
       },
       hints = {
         assignVariableTypes = true,
