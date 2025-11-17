@@ -211,10 +211,61 @@ function TSOrganizeImports()
   end
 end
 
+--
+local function add_eslint_disable()
+  local line = vim.api.nvim_win_get_cursor(0)[1]
+  local diagnostics = vim.diagnostic.get(0, { lnum = line - 1 })
+
+  if #diagnostics == 0 then
+    print("No diagnostics on current line")
+    return
+  end
+
+  -- Filter for eslint diagnostics
+  local eslint_diags = vim.tbl_filter(function(d)
+    return d.source == "eslint"
+  end, diagnostics)
+
+  if #eslint_diags == 0 then
+    print("No eslint diagnostics on current line")
+    return
+  end
+
+  -- Extract rule name from message (format: "message [rule-name]")
+  local rule = eslint_diags[1].code or eslint_diags[1].message:match("%[(.-)%]$")
+
+  if not rule then
+    print("Could not extract eslint rule")
+    return
+  end
+
+  -- Get current indentation
+  local current_line_text = vim.api.nvim_buf_get_lines(0, line - 1, line, false)[1]
+  local indent = current_line_text:match("^%s*")
+
+  -- Insert disable comment
+  local comment = indent .. "// eslint-disable-next-line " .. rule
+  vim.api.nvim_buf_set_lines(0, line - 1, line - 1, false, { comment })
+end
+
+local function InlayHintsEnable()
+  if vim.lsp.inlay_hint then
+    vim.lsp.inlay_hint(0, true)
+  end
+end
+
+local function InlayHintsDisable()
+  if vim.lsp.inlay_hint then
+    vim.lsp.inlay_hint(0, false)
+  end
+end
+
 -- on startup
 vim.api.nvim_create_autocmd("UIEnter", {
   callback = function()
     vim.api.nvim_create_user_command("Mock", Mock, {})
+    vim.api.nvim_create_user_command("InlayHintsEnable", InlayHintsEnable, { desc = "Enable inlay hints" })
+    vim.api.nvim_create_user_command("InlayHintsDisable", InlayHintsDisable, { desc = "Disable inlay hints" })
   end,
 })
 
@@ -225,6 +276,12 @@ vim.api.nvim_create_autocmd("BufEnter", {
     vim.api.nvim_create_user_command("ToggleClaudeTerminal", ToggleClaudeTerminal, {})
     vim.api.nvim_create_user_command("ToggleCodexTerminal", ToggleCodexTerminal, {})
     vim.api.nvim_create_user_command("ToggleGooseTerminal", ToggleGooseTerminal, {})
+
+    vim.api.nvim_create_user_command(
+      "AddEslintDisable",
+      add_eslint_disable,
+      { desc = "Add eslint disable comment for the rule on the current line" }
+    )
   end,
 })
 
