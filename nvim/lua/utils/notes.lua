@@ -16,8 +16,14 @@ local function add_note(note)
 end
 
 local read_notes_bufrn = nil
+local read_notes_winid = nil
 local function read_notes()
   local buf
+
+  if read_notes_winid and vim.api.nvim_win_is_valid(read_notes_winid) then
+    vim.api.nvim_set_current_win(read_notes_winid)
+    return
+  end
 
   if read_notes_bufrn and vim.api.nvim_buf_is_valid(read_notes_bufrn) then
     buf = read_notes_bufrn
@@ -34,7 +40,7 @@ local function read_notes()
   local row = math.floor((vim.o.lines - height) / 2)
   local col = math.floor((vim.o.columns - width) / 2)
 
-  local winid = vim.api.nvim_open_win(buf, true, {
+  read_notes_winid = vim.api.nvim_open_win(buf, true, {
     relative = "editor",
     width = width,
     height = height,
@@ -44,7 +50,7 @@ local function read_notes()
     border = "rounded",
   })
 
-  vim.api.nvim_set_current_win(winid)
+  vim.api.nvim_set_current_win(read_notes_winid)
   vim.api.nvim_set_current_buf(buf)
   vim.cmd("edit " .. notes_file)
 end
