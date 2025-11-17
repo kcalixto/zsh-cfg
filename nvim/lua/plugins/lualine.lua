@@ -2,59 +2,70 @@ return {
   {
     event = "VeryLazy",
     "nvim-lualine/lualine.nvim",
-    opts = {
-      options = {
-        icons_enabled = true,
-        theme = "horizon",
-        component_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
-        disabled_filetypes = {},
-        always_divide_middle = false,
-        globalstatus = true,
-      },
-      sections = {
-        lualine_a = { "mode" },
-        lualine_b = { "branch", { "diagnostics", always_visible = true } },
-        lualine_c = {
-          {
-            "filename",
-            path = 1,
-            file_status = true,
-            newfile_status = false,
-            symbols = {
-              modified = "●", -- Text to show when the file is modified.
-              readonly = "", -- Text to show when the file is non-modifiable or readonly.
-              unnamed = "󰊠", -- Text to show for unnamed buffers.
-              newfile = "", -- Text to show for newly created file before first write
+    config = function()
+      local theme = require("lualine.themes.horizon")
+      local bg = "#011423" -- "#011627"
+      theme.normal.c.bg = bg
+      theme.inactive.c.bg = bg
+      theme.visual.c.bg = bg
+      theme.insert.c.bg = bg
+      theme.replace.c.bg = bg
+      theme.command.c.bg = bg
+
+      require("lualine").setup({
+        options = {
+          icons_enabled = true,
+          theme = theme,
+          component_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
+          disabled_filetypes = {},
+          always_divide_middle = false,
+          globalstatus = true,
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = { "branch", { "diagnostics", always_visible = true } },
+          lualine_c = {
+            {
+              "filename",
+              path = 1,
+              file_status = true,
+              newfile_status = false,
+              symbols = {
+                modified = "●", -- Text to show when the file is modified.
+                readonly = "", -- Text to show when the file is non-modifiable or readonly.
+                unnamed = "󰊠", -- Text to show for unnamed buffers.
+                newfile = "", -- Text to show for newly created file before first write
+              },
             },
           },
-        },
-        lualine_x = {
-          { -- show current buffer position and total buffers
-            function()
-              local current_buf = vim.api.nvim_get_current_buf()
-              local total_bufs = #vim.api.nvim_list_bufs()
+          lualine_x = {
+            { -- show current buffer position and total buffers
+              function()
+                local current_buf = vim.api.nvim_get_current_buf()
+                local total_bufs = #vim.api.nvim_list_bufs()
 
-              return "b " .. current_buf .. "  bn " .. total_bufs .. "  |"
-            end,
+                return "b " .. current_buf .. "  bn " .. total_bufs .. "  |"
+              end,
+            },
+            "encoding",
+            "fileformat",
+            "filetype",
           },
-          "encoding",
-          "fileformat",
-          "filetype",
+          lualine_y = { "progress" },
+          lualine_z = { "location" },
         },
-        lualine_y = { "progress" },
-        lualine_z = { "location" },
-      },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {},
-      },
-      tabline = {},
-      extensions = {},
-    },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {},
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {},
+        },
+        tabline = {},
+        extensions = {},
+      })
+    end,
   },
 }
