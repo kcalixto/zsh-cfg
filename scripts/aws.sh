@@ -13,3 +13,21 @@ aws_logs() {
         echo "Invalid option"
     fi
 }
+
+aws_change_lambda_env() {
+    local function_name
+    function_name=$(aws lambda list-functions --region sa-east-1 | jq -r ".Functions[].FunctionName" | fzf --preview '')
+
+    local key
+    key=$(aws lambda get-function-configuration --function-name "$function_name" --region sa-east-1 | jq -r '.Environment.Variables | keys[]' | fzf --preview '')
+
+    echo "Current value for $key:"
+    aws lambda get-function-configuration --function-name "$function_name" --region sa-east-1 | jq -r ".Environment.Variables[\"$key\"]"
+
+    read -rp "Enter new value for $key: " new_value
+
+    aws lambda update-function-configuration --function-name "$function_name" --region sa-east-1 --environment "Variables={${key}=${new_value}}"
+
+    echo "Updated value for $key:"
+    aws lambda get-function-configuration --function-name "$function_name" --region sa-east-1 | jq -r ".Environment.Variables[\"$key\"]"
+}
