@@ -7,17 +7,6 @@ return {
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
-      -- adapters
-      "marilari88/neotest-vitest",
-      "nvim-neotest/neotest-jest",
-      {
-        "fredrikaverpil/neotest-golang",
-        version = "*", -- Optional, but recommended
-        build = function()
-          vim.system({ "go", "install", "gotest.tools/gotestsum@latest" }):wait() -- Optional, but recommended
-        end,
-        config = function() end,
-      },
     },
     -- stylua: ignore
     keys = {
@@ -44,5 +33,16 @@ return {
         auto_reload = true,
       })
     end,
+  },
+  -- neotest adapters
+  {
+    "marilari88/neotest-vitest",
+    version = "*", -- Optional, but recommended
+    config = function() end,
+  },
+  {
+    "nvim-neotest/neotest-jest",
+    version = "*", -- Optional, but recommended
+    config = function() end,
   },
 }
