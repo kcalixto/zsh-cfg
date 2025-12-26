@@ -1,11 +1,13 @@
 -- DeleteHiddenBuffersForced command
 local function DeleteHiddenBuffersForced()
+  -- delete all buffers that does not have a window and were not modified
+
   local deleted = 0
   local buffers = vim.api.nvim_list_bufs()
 
   for _, buf in ipairs(buffers) do
     -- Check if buffer exists and is loaded but not visible in any window
-    if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_is_loaded(buf) then
+    -- if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_is_loaded(buf) then
       local is_visible = false
 
       -- Check all windows to see if buffer is visible
@@ -21,7 +23,7 @@ local function DeleteHiddenBuffersForced()
         vim.api.nvim_buf_delete(buf, { force = true })
         deleted = deleted + 1
       end
-    end
+    -- end
   end
 
   vim.notify(deleted .. " hidden buffer(s) deleted", vim.log.levels.INFO)
