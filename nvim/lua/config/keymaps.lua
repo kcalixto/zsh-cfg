@@ -1,4 +1,4 @@
-local harpoon = require("harpoon")
+-- local harpoon = require("harpoon")
 local conform = require("conform")
 local ns = { noremap = true, silent = true }
 
@@ -54,21 +54,33 @@ vim.keymap.set("", "[c", ":cprevious<CR>", ns)
 -- vim.keymap('n', '<Leader>gl', ':0GcLog<CR>', ns)
 -- vim.keymap('n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', ns)
 -- vim.keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', ns)
+
 -- tabs (dont tell anyone i'm using it)
 vim.keymap.set("n", "<leader>to", ":tabnew<CR>", ns) -- open new tab
-vim.keymap.set("n", "<leader>tx", ":tabclose<CR>", ns) -- close current tab
-vim.keymap.set("n", "<leader>tn", ":tabn<CR>", ns) -- go to next tab
-vim.keymap.set("n", "<leader>tp", ":tabp<CR>", ns) -- go to previous tab
-vim.keymap.set("n", "<leader>t1", ":tabn 1<CR>", ns) -- go to first tab
-vim.keymap.set("n", "<leader>t2", ":tabn 2<CR>", ns) -- go to second tab
-vim.keymap.set("n", "<leader>t3", ":tabn 3<CR>", ns) -- go to third tab
-vim.keymap.set("n", "<leader>t4", ":tabn 4<CR>", ns) -- go to fourth tab
-vim.keymap.set("n", "<leader>t5", ":tabn 5<CR>", ns) -- go to fifth tab
-vim.keymap.set("n", "<leader>t6", ":tabn 6<CR>", ns) -- go to sixth tab
-vim.keymap.set("n", "<leader>t7", ":tabn 7<CR>", ns) -- go to seventh tab
-vim.keymap.set("n", "<leader>t8", ":tabn 8<CR>", ns) -- go to eighth tab
-vim.keymap.set("n", "<leader>t9", ":tabn 9<CR>", ns) -- go to ninth tab
+-- vim.keymap.set("n", "<leader>tx", ":tabclose<CR>", ns) -- close current tab
+-- vim.keymap.set("n", "<leader>tn", ":tabn<CR>", ns) -- go to next tab
+-- vim.keymap.set("n", "<leader>tp", ":tabp<CR>", ns) -- go to previous tab
+vim.keymap.set("n", "<leader>tx", function()
+  vim.notify("DEPRECATED")
+end, ns)
+vim.keymap.set("n", "<leader>tn", function()
+  vim.notify("DEPRECATED")
+end, ns)
+vim.keymap.set("n", "<leader>tp", function()
+  vim.notify("DEPRECATED")
+end, ns)
 vim.keymap.set("n", "<leader>tt", ":tabedit %<CR>", ns) -- opens current buffer in another tab (kinda temp fullscreen hack)
+vim.keymap.set("n", "<leader>x", ":tabclose<CR>", ns) -- close current tab
+vim.keymap.set("n", "<leader>1", ":tabn 1<CR>", ns) -- go to first tab
+vim.keymap.set("n", "<leader>2", ":tabn 2<CR>", ns) -- go to second tab
+vim.keymap.set("n", "<leader>3", ":tabn 3<CR>", ns) -- go to third tab
+vim.keymap.set("n", "<leader>4", ":tabn 4<CR>", ns) -- go to fourth tab
+vim.keymap.set("n", "<leader>5", ":tabn 5<CR>", ns) -- go to fifth tab
+vim.keymap.set("n", "<leader>6", ":tabn 6<CR>", ns) -- go to sixth tab
+vim.keymap.set("n", "<leader>7", ":tabn 7<CR>", ns) -- go to seventh tab
+vim.keymap.set("n", "<leader>8", ":tabn 8<CR>", ns) -- go to eighth tab
+vim.keymap.set("n", "<leader>9", ":tabn 9<CR>", ns) -- go to ninth tab
+
 -- motion
 vim.keymap.set("n", "<M-h>", "<C-\\><C-n><C-w>h", ns)
 vim.keymap.set("n", "<M-j>", "<C-\\><C-n><C-w>j", ns)
@@ -116,45 +128,45 @@ vim.keymap.set("n", "<BS>b", function() -- close buffer and go to next
   vim.notify("buffer " .. bufnr .. " closed", vim.log.levels.INFO)
 end, ns)
 
--- harpoon
-harpoon:setup() -- required
-vim.keymap.set("n", "<leader>aa", function()
-  harpoon:list():add()
-  vim.notify("Added current file to harpoon", vim.log.levels.INFO)
-end)
-vim.keymap.set("n", "<C-e>", function()
-  harpoon.ui:toggle_quick_menu(harpoon:list())
-end)
-vim.keymap.set("n", "<leader>1", function()
-  harpoon:list():select(1)
-end)
-vim.keymap.set("n", "<leader>2", function()
-  harpoon:list():select(2)
-end)
-vim.keymap.set("n", "<leader>3", function()
-  harpoon:list():select(3)
-end)
-vim.keymap.set("n", "<leader>4", function()
-  harpoon:list():select(4)
-end)
-vim.keymap.set("n", "<leader>5", function()
-  harpoon:list():select(5)
-end)
-vim.keymap.set("n", "<leader>6", function()
-  harpoon:list():select(6)
-end)
-vim.keymap.set("n", "<leader>7", function()
-  harpoon:list():select(7)
-end)
-vim.keymap.set("n", "<leader>8", function()
-  harpoon:list():select(8)
-end)
-vim.keymap.set("n", "<leader>9", function()
-  harpoon:list():select(9)
-end)
-vim.keymap.set("n", "<leader>0", function()
-  harpoon:list():select(10)
-end)
+-- -- harpoon
+-- harpoon:setup() -- required
+-- vim.keymap.set("n", "<leader>aa", function()
+--   harpoon:list():add()
+--   vim.notify("Added current file to harpoon", vim.log.levels.INFO)
+-- end)
+-- vim.keymap.set("n", "<C-e>", function()
+--   harpoon.ui:toggle_quick_menu(harpoon:list())
+-- end)
+-- vim.keymap.set("n", "<leader>1", function()
+--   harpoon:list():select(1)
+-- end)
+-- vim.keymap.set("n", "<leader>2", function()
+--   harpoon:list():select(2)
+-- end)
+-- vim.keymap.set("n", "<leader>3", function()
+--   harpoon:list():select(3)
+-- end)
+-- vim.keymap.set("n", "<leader>4", function()
+--   harpoon:list():select(4)
+-- end)
+-- vim.keymap.set("n", "<leader>5", function()
+--   harpoon:list():select(5)
+-- end)
+-- vim.keymap.set("n", "<leader>6", function()
+--   harpoon:list():select(6)
+-- end)
+-- vim.keymap.set("n", "<leader>7", function()
+--   harpoon:list():select(7)
+-- end)
+-- vim.keymap.set("n", "<leader>8", function()
+--   harpoon:list():select(8)
+-- end)
+-- vim.keymap.set("n", "<leader>9", function()
+--   harpoon:list():select(9)
+-- end)
+-- vim.keymap.set("n", "<leader>0", function()
+--   harpoon:list():select(10)
+-- end)
 
 -- oil.nvim
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
@@ -182,7 +194,9 @@ vim.keymap.set("n", "\\", function()
   telescope.find_files()
 end, ns)
 
-require("leap").create_default_mappings()
+-- require("leap").create_default_mappings()
+vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap)")
+vim.keymap.set("n", "S", "<Plug>(leap-from-window)")
 -- take what is selected in visual mode and open in telescope file_grep
 vim.keymap.set("v", "s", function()
   -- local selected_text = vim.fn.getreg("\"") -- get selected text
@@ -198,6 +212,7 @@ vim.keymap.set("n", "!", function()
   -- reload the current file
   vim.cmd("e!")
 end, ns)
+vim.keymap.set("n", "E", ":e .<CR>", ns) -- open file explorer
 
 -- vim.keymap.set("n", "f", function()
 --   -- split tab vertically
@@ -207,4 +222,11 @@ end, ns)
 --   telescope.find_files()
 -- end, ns) -- disable default 'e' behavior
 vim.keymap.set("n", "Q", "q", { noremap = true }) -- Remap Q to start recording a macro
-vim.keymap.set("n", "q", ":wq<CR>", { noremap = true }) -- Remap q to save and quit
+-- write and save if is file, if not, just quit
+vim.keymap.set("n", "q", function()
+  if vim.bo.modified then
+    vim.cmd("wq")
+  else
+    vim.cmd("q")
+  end
+end, ns)
