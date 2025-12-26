@@ -17,10 +17,11 @@ return {
     },
     config = function()
       require("neotest").setup({
+        log_level = vim.log.levels.DEBUG,
         adapters = {
-          require("neotest-vitest"),
+          -- require("neotest-vitest"),
           require("neotest-jest"),
-          require("neotest-golang"),
+          require("neotest-go"),
         },
       })
     end,
@@ -44,5 +45,20 @@ return {
     "nvim-neotest/neotest-jest",
     version = "*", -- Optional, but recommended
     config = function() end,
+  },
+  {
+    "nvim-neotest/neotest-go",
+    config = function()
+      -- get neotest namespace (api call creates or returns namespace)
+      local neotest_ns = vim.api.nvim_create_namespace("neotest")
+      vim.diagnostic.config({
+        virtual_text = {
+          format = function(diagnostic)
+            local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+            return message
+          end,
+        },
+      }, neotest_ns)
+    end,
   },
 }
