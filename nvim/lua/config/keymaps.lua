@@ -1,4 +1,4 @@
--- local harpoon = require("harpoon")
+local harpoon = require("harpoon")
 local conform = require("conform")
 local ns = { noremap = true, silent = true }
 
@@ -70,16 +70,18 @@ vim.keymap.set("n", "<leader>tp", function()
   vim.notify("DEPRECATED")
 end, ns)
 vim.keymap.set("n", "<leader>tt", ":tabedit %<CR>", ns) -- opens current buffer in another tab (kinda temp fullscreen hack)
-vim.keymap.set("n", "<leader>x", ":tabclose<CR>", ns) -- close current tab
-vim.keymap.set("n", "<leader>1", ":tabn 1<CR>", ns) -- go to first tab
-vim.keymap.set("n", "<leader>2", ":tabn 2<CR>", ns) -- go to second tab
-vim.keymap.set("n", "<leader>3", ":tabn 3<CR>", ns) -- go to third tab
-vim.keymap.set("n", "<leader>4", ":tabn 4<CR>", ns) -- go to fourth tab
-vim.keymap.set("n", "<leader>5", ":tabn 5<CR>", ns) -- go to fifth tab
-vim.keymap.set("n", "<leader>6", ":tabn 6<CR>", ns) -- go to sixth tab
-vim.keymap.set("n", "<leader>7", ":tabn 7<CR>", ns) -- go to seventh tab
-vim.keymap.set("n", "<leader>8", ":tabn 8<CR>", ns) -- go to eighth tab
-vim.keymap.set("n", "<leader>9", ":tabn 9<CR>", ns) -- go to ninth tab
+vim.keymap.set("n", "<leader>tx", ":tabclose<CR>", ns) -- close current tab
+vim.keymap.set("n", "L", ":tabnext<CR>", ns) -- go to next tab
+vim.keymap.set("n", "H", ":tabprevious<CR>", ns) -- go to previous tab
+-- vim.keymap.set("n", "<leader>1", ":tabn 1<CR>", ns) -- go to first tab
+-- vim.keymap.set("n", "<leader>2", ":tabn 2<CR>", ns) -- go to second tab
+-- vim.keymap.set("n", "<leader>3", ":tabn 3<CR>", ns) -- go to third tab
+-- vim.keymap.set("n", "<leader>4", ":tabn 4<CR>", ns) -- go to fourth tab
+-- vim.keymap.set("n", "<leader>5", ":tabn 5<CR>", ns) -- go to fifth tab
+-- vim.keymap.set("n", "<leader>6", ":tabn 6<CR>", ns) -- go to sixth tab
+-- vim.keymap.set("n", "<leader>7", ":tabn 7<CR>", ns) -- go to seventh tab
+-- vim.keymap.set("n", "<leader>8", ":tabn 8<CR>", ns) -- go to eighth tab
+-- vim.keymap.set("n", "<leader>9", ":tabn 9<CR>", ns) -- go to ninth tab
 
 -- motion
 vim.keymap.set("n", "<M-h>", "<C-\\><C-n><C-w>h", ns)
@@ -128,45 +130,45 @@ vim.keymap.set("n", "<BS>b", function() -- close buffer and go to next
   vim.notify("buffer " .. bufnr .. " closed", vim.log.levels.INFO)
 end, ns)
 
--- -- harpoon
--- harpoon:setup() -- required
--- vim.keymap.set("n", "<leader>aa", function()
---   harpoon:list():add()
---   vim.notify("Added current file to harpoon", vim.log.levels.INFO)
--- end)
--- vim.keymap.set("n", "<C-e>", function()
---   harpoon.ui:toggle_quick_menu(harpoon:list())
--- end)
--- vim.keymap.set("n", "<leader>1", function()
---   harpoon:list():select(1)
--- end)
--- vim.keymap.set("n", "<leader>2", function()
---   harpoon:list():select(2)
--- end)
--- vim.keymap.set("n", "<leader>3", function()
---   harpoon:list():select(3)
--- end)
--- vim.keymap.set("n", "<leader>4", function()
---   harpoon:list():select(4)
--- end)
--- vim.keymap.set("n", "<leader>5", function()
---   harpoon:list():select(5)
--- end)
--- vim.keymap.set("n", "<leader>6", function()
---   harpoon:list():select(6)
--- end)
--- vim.keymap.set("n", "<leader>7", function()
---   harpoon:list():select(7)
--- end)
--- vim.keymap.set("n", "<leader>8", function()
---   harpoon:list():select(8)
--- end)
--- vim.keymap.set("n", "<leader>9", function()
---   harpoon:list():select(9)
--- end)
--- vim.keymap.set("n", "<leader>0", function()
---   harpoon:list():select(10)
--- end)
+-- harpoon
+harpoon:setup() -- required
+vim.keymap.set("n", "<leader>aa", function()
+  harpoon:list():add()
+  vim.notify("Added current file to harpoon", vim.log.levels.INFO)
+end)
+vim.keymap.set("n", "<C-e>", function()
+  harpoon.ui:toggle_quick_menu(harpoon:list())
+end)
+vim.keymap.set("n", "<leader>1", function()
+  harpoon:list():select(1)
+end)
+vim.keymap.set("n", "<leader>2", function()
+  harpoon:list():select(2)
+end)
+vim.keymap.set("n", "<leader>3", function()
+  harpoon:list():select(3)
+end)
+vim.keymap.set("n", "<leader>4", function()
+  harpoon:list():select(4)
+end)
+vim.keymap.set("n", "<leader>5", function()
+  harpoon:list():select(5)
+end)
+vim.keymap.set("n", "<leader>6", function()
+  harpoon:list():select(6)
+end)
+vim.keymap.set("n", "<leader>7", function()
+  harpoon:list():select(7)
+end)
+vim.keymap.set("n", "<leader>8", function()
+  harpoon:list():select(8)
+end)
+vim.keymap.set("n", "<leader>9", function()
+  harpoon:list():select(9)
+end)
+vim.keymap.set("n", "<leader>0", function()
+  harpoon:list():select(10)
+end)
 
 -- oil.nvim
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
