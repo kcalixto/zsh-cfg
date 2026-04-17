@@ -4,9 +4,7 @@
 # export GOROOT=/Users/kaua.calixto/.gvm/gos/go1.19
 # export GOROOT_BOOTSTRAP=$GOROOT
 export GVM_ROOT="$HOME/.gvm"
-if [ -s "$GVM_ROOT/scripts/gvm" ] && [ -z "$GVM_VERSION" ]; then
-    source "$GVM_ROOT/scripts/gvm"
-fi
+[[ -s "$GVM_ROOT/scripts/gvm" ]] && source "$GVM_ROOT/scripts/gvm"
 
 # # don't forget to add ssh over https in .gitconfig
 export GOPATH=$HOME/go/src

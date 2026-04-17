@@ -1,5 +1,6 @@
 local harpoon = require("harpoon")
 local conform = require("conform")
+local origami = require("origami")
 local ns = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<space>ss", function()
@@ -30,6 +31,10 @@ end, { desc = "Add new note" })
 vim.keymap.set("n", "<leader>n", function()
   notes.read_notes()
 end, { desc = "Read all notes" })
+
+-- cuts without copying to clipboard
+vim.keymap.set("n", "X", '"_x', ns)
+vim.keymap.set("v", "X", '"_d', ns)
 
 vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>", ns)
 vim.keymap.set("n", "<space>x", ":.lua<CR>", ns)
@@ -206,8 +211,9 @@ vim.keymap.set("v", "s", function()
   selected_text = table.concat(selected_text, " ")
   vim.notify(selected_text)
   selected_text = selected_text:gsub("\n", "") -- remove newlines
-  local telescope = require("telescope.builtin")
-  telescope.live_grep({ default_text = selected_text })
+
+  local multigrep = require("plugins.telescope.multigrep")
+  multigrep.live_multigrep({ default_text = selected_text, preview = { hide_on_startup = false } })
 end, ns)
 
 vim.keymap.set("n", "!", function()
@@ -232,3 +238,32 @@ vim.keymap.set("n", "q", function()
     vim.cmd("q")
   end
 end, ns)
+
+-- origami
+vim.keymap.set("n", "<CR>", "za", { noremap = true, silent = true })
+origami.setup({
+  useLspFoldsWithTreesitterFallback = {
+    enabled = true,
+    foldmethodIfNeitherIsAvailable = "indent", ---@type string|fun(bufnr: number): string
+  },
+  pauseFoldsOnSearch = true,
+  foldtext = {
+    enabled = true,
+    padding = {
+      width = 3,
+    },
+    lineCount = {
+      template = "%d lines", -- `%d` is replaced with the number of folded lines
+      hlgroup = "Comment",
+    },
+    diagnosticsCount = true, -- uses hlgroups and icons from `vim.diagnostic.config().signs`
+    gitsignsCount = true, -- requires `gitsigns.nvim`
+    disableOnFt = { "snacks_picker_input" }, ---@type string[]
+  },
+  autoFold = { kinds = {} },
+  foldKeymaps = {
+    setup = true, -- modifies `h`, `l`, `^`, and `$`
+    closeOnlyOnFirstColumn = false, -- `h` and `^` only close in the 1st column
+    scrollLeftOnCaret = false, -- `^` should scroll left (basically mapped to `0^`)
+  },
+})

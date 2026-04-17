@@ -5,6 +5,7 @@
 -- vim.cmd("hi FloatBorder guibg=NONE")
 -- vim.cmd("hi TelescopeBorder guifg=#e9537a")
 -- vim.cmd("hi TelescopeResultsNormal guifg=#a7acc7")
+-- vim.cmd("hi CursorLine guibg=NONE")
 
 vim.cmd.colorscheme("WinterIsComing-dark-blue-color-theme")
 vim.cmd("hi @tag guifg=#E8A75D")

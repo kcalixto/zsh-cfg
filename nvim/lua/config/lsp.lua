@@ -75,6 +75,7 @@ lsp.config("lua_ls", {
 -- Formatting configuration
 local install_formatters = {
   "prettier",
+  "biome",
   "goimports",
   "gofmt",
   "black",
@@ -88,10 +89,10 @@ conform.setup({
     css = { "prettier" },
     scss = { "prettier" },
     html = { "prettier" },
-    javascript = { "prettier" },
-    javascriptreact = { "prettier" },
-    typescript = { "prettier" },
-    typescriptreact = { "prettier" },
+    javascript = { "prettier", "biome" },
+    javascriptreact = { "prettier", "biome" },
+    typescript = { "prettier", "biome" },
+    typescriptreact = { "prettier", "biome" },
     json = { "prettier" },
     go = { "gofmt", "goimports" },
     python = { "black" },

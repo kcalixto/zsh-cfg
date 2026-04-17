@@ -1,3 +1,8 @@
+-- ToggleInlayHints command
+local function ToggleInlayHints()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end
+
 -- DeleteHiddenBuffersForced command
 local function DeleteHiddenBuffersForced()
   -- delete all buffers that does not have a window and were not modified
@@ -8,21 +13,21 @@ local function DeleteHiddenBuffersForced()
   for _, buf in ipairs(buffers) do
     -- Check if buffer exists and is loaded but not visible in any window
     -- if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_is_loaded(buf) then
-      local is_visible = false
+    local is_visible = false
 
-      -- Check all windows to see if buffer is visible
-      for _, win in ipairs(vim.api.nvim_list_wins()) do
-        if vim.api.nvim_win_get_buf(win) == buf then
-          is_visible = true
-          break
-        end
+    -- Check all windows to see if buffer is visible
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_buf(win) == buf then
+        is_visible = true
+        break
       end
+    end
 
-      -- If buffer is not visible and not modified, delete it
-      if not is_visible and not vim.api.nvim_buf_get_option(buf, "modified") then
-        vim.api.nvim_buf_delete(buf, { force = true })
-        deleted = deleted + 1
-      end
+    -- If buffer is not visible and not modified, delete it
+    if not is_visible and not vim.api.nvim_buf_get_option(buf, "modified") then
+      vim.api.nvim_buf_delete(buf, { force = true })
+      deleted = deleted + 1
+    end
     -- end
   end
 
@@ -306,7 +311,7 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "go",
   callback = function()
     vim.api.nvim_create_user_command("GoGenerate", GoGenerate, {})
-    vim.api.nvim_buf_set_keymap(0, "n", "<C-i>", ":GoImport<CR>", {})
+    -- vim.api.nvim_buf_set_keymap(0, "n", "<C-i>", ":GoImport<CR>", {})
     vim.api.nvim_buf_set_keymap(0, "n", "<C-t>", ":GoTestPkg<CR>", {})
     vim.api.nvim_buf_set_keymap(0, "n", "<C-c>", ":GoCoverage -p<CR>", {})
   end,
@@ -320,6 +325,7 @@ vim.api.nvim_create_autocmd("FileType", {
   },
   callback = function()
     vim.api.nvim_create_user_command("TSOrganizeImports", TSOrganizeImports, {})
+    vim.api.nvim_create_user_command("ToggleInlayHints", ToggleInlayHints, {})
     vim.api.nvim_buf_set_keymap(0, "n", "<C-i>", ":TSOrganizeImports<CR>", {})
   end,
 })

@@ -21,4 +21,8 @@ return {
       },
     },
   },
+  on_attach = function(client, bufnr)
+    -- Preserve fold settings for all LSPs
+    vim.opt_local.foldlevel = 99
+  end,
 }

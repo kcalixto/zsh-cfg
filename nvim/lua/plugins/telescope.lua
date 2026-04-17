@@ -13,6 +13,7 @@ return {
           fzf = {},
         },
         defaults = {
+          file_ignore_patterns = { "vendor/" },
           path_display = {
             -- 'shorten',
             "truncate",

@@ -38,6 +38,9 @@ local live_multigrep = function(opts)
       -- table.insert(args, '!*.mod')
       table.insert(args, "-g")
       table.insert(args, "!*.sum")
+      -- go vendor directories
+      table.insert(args, "-g")
+      table.insert(args, "!vendor/**")
 
       return vim.tbl_flatten({
         args,

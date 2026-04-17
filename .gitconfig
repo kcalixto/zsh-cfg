@@ -2,4 +2,8 @@
 	email = kauacalixtocontato@gmail.com
 	name = kauacalixtocontato@gmail.com
 [core]
-	editor = vim
+    editor = vim
+[push]
+	autoSetupRemote = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
