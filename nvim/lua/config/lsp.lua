@@ -82,6 +82,26 @@ local install_formatters = {
   "stylua",
 }
 
+local conform_util = require("conform.util")
+local function biome_or_prettier()
+  local biome_configs = {
+    "biome.json",
+    ".biomerc",
+    ".biomerc.json",
+    ".biomerc.jsonc",
+    ".biomerc.toml",
+  }
+  return function(bufnr)
+    local filename = vim.api.nvim_buf_get_name(bufnr)
+    local root = conform_util.root_file(biome_configs)(nil, { dirname = vim.fs.dirname(filename) })
+    if root then
+      return { "biome" }
+    else
+      return { "prettier" }
+    end
+  end
+end
+
 conform.setup({
   default_format_opts = { timeout_ms = 2000 },
   format_on_save = false,
@@ -89,11 +109,11 @@ conform.setup({
     css = { "prettier" },
     scss = { "prettier" },
     html = { "prettier" },
-    javascript = { "prettier", "biome" },
-    javascriptreact = { "prettier", "biome" },
-    typescript = { "prettier", "biome" },
-    typescriptreact = { "prettier", "biome" },
-    json = { "prettier" },
+    javascript = biome_or_prettier(),
+    javascriptreact = biome_or_prettier(),
+    typescript = biome_or_prettier(),
+    typescriptreact = biome_or_prettier(),
+    json = biome_or_prettier(),
     go = { "gofmt", "goimports" },
     python = { "black" },
     lua = { "stylua" },
