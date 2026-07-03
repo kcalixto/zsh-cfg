@@ -218,6 +218,16 @@ function TSOrganizeImports()
   end
 end
 
+function OpenObsidianVault()
+  local vault_path = "~/go/src/obsidian-vault/main-vault"
+  vim.cmd("tabnew " .. vault_path)
+end
+
+function OpenZSHConfig()
+  local zsh_config_path = "~/go/src/zsh-cfg"
+  vim.cmd("tabnew " .. zsh_config_path)
+end
+
 --
 local function add_eslint_disable()
   local line = vim.api.nvim_win_get_cursor(0)[1]
@@ -284,6 +294,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
     vim.api.nvim_create_user_command("ToggleCodexTerminal", ToggleCodexTerminal, {})
     vim.api.nvim_create_user_command("ToggleGooseTerminal", ToggleGooseTerminal, {})
     vim.api.nvim_create_user_command("ToggleInlayHints", ToggleInlayHints, {})
+    vim.api.nvim_create_user_command("OpenObsidianVault", OpenObsidianVault, {})
+    vim.api.nvim_create_user_command("OpenZSHConfig", OpenZSHConfig, {})
 
     vim.api.nvim_create_user_command(
       "AddEslintDisable",
