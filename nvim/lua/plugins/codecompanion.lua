@@ -20,20 +20,30 @@ return {
       require("codecompanion").setup({
         strategies = {
           chat = {
-            adapter = "copilot",
+            adapter = "claude_code",
           },
+          inline = {
+            adapter = "claude_code",
+          },
+        },
+        adapters = {
+          claude_code = function()
+            return require("codecompanion.adapters").extend("claude_code", {
+              -- No API key required here; it extracts your browser/SSO OAuth token automatically
+            })
+          end,
         },
         opts = { log_level = "DEBUG" },
-        extensions = {
-          mcphub = {
-            callback = "mcphub.extensions.codecompanion",
-            opts = {
-              make_vars = true,
-              make_slash_commands = true,
-              show_result_in_chat = true,
-            },
-          },
-        },
+        -- extensions = {
+        --   mcphub = {
+        --     callback = "mcphub.extensions.codecompanion",
+        --     opts = {
+        --       make_vars = true,
+        --       make_slash_commands = true,
+        --       show_result_in_chat = true,
+        --     },
+        --   },
+        -- },
       })
     end,
   },
