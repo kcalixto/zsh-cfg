@@ -6,7 +6,7 @@ return {
     -- "nvim-treesitter/nvim-treesitter",
   },
   config = function(lp, opts)
-    require("go").setup(opts)
+    require("go").setup(vim.tbl_extend("force", opts or {}, { lsp_codelens = false }))
     -- local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
     -- vim.api.nvim_create_autocmd("BufWritePre", {
     --   pattern = "*.go",
