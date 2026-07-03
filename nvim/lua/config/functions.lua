@@ -283,6 +283,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
     vim.api.nvim_create_user_command("ToggleClaudeTerminal", ToggleClaudeTerminal, {})
     vim.api.nvim_create_user_command("ToggleCodexTerminal", ToggleCodexTerminal, {})
     vim.api.nvim_create_user_command("ToggleGooseTerminal", ToggleGooseTerminal, {})
+    vim.api.nvim_create_user_command("ToggleInlayHints", ToggleInlayHints, {})
 
     vim.api.nvim_create_user_command(
       "AddEslintDisable",
@@ -325,7 +326,6 @@ vim.api.nvim_create_autocmd("FileType", {
   },
   callback = function()
     vim.api.nvim_create_user_command("TSOrganizeImports", TSOrganizeImports, {})
-    vim.api.nvim_create_user_command("ToggleInlayHints", ToggleInlayHints, {})
     vim.api.nvim_buf_set_keymap(0, "n", "<C-i>", ":TSOrganizeImports<CR>", {})
   end,
 })
