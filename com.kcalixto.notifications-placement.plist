@@ -8,7 +8,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/usr/bin/osascript</string>
-        <string>/Users/kaua.calixto/go/src/zsh-cfg/change-notifications-placement.scpt</string>
+            <string>/Users/kaua.calixto/go/src/kcalixto/zsh-cfg/change-notifications-placement.scpt</string>
     </array>
 
     <key>RunAtLoad</key>

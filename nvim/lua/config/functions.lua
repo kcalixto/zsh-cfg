@@ -219,12 +219,12 @@ function TSOrganizeImports()
 end
 
 function OpenObsidianVault()
-  local vault_path = "~/go/src/obsidian-vault/main-vault"
+  local vault_path = "~/go/src/kcalixto/obsidian-vault/main-vault"
   vim.cmd("tabnew " .. vault_path)
 end
 
 function OpenZSHConfig()
-  local zsh_config_path = "~/go/src/zsh-cfg"
+  local zsh_config_path = "~/go/src/kcalixto/zsh-cfg"
   vim.cmd("tabnew " .. zsh_config_path)
 end
 

@@ -1,11 +1,15 @@
 # tools
 ```bash
-ln .alacritty.toml ~/.alacritty.toml
 ln .zshrc ~/.zshrc
 ln .tmux.conf ~/.tmux.conf
 ln .gitconfig ~/.gitconfig
-ln .goosehints ~/.config/goose/.goosehints
-ln mcphub/servers.json ~/.config/mcphub/servers.json
+ln ./.claude/CLAUDE.md ~/.claude/CLAUDE.md
+```
+
+# folders
+```bash
+ln -s "$(pwd)/nvim" ~/.config/nvim
+ln -s "$(pwd)/.claude/skills" ~/.claude/skills
 ```
 
 # to use npm private packages
@@ -14,21 +18,6 @@ ln mcphub/servers.json ~/.config/mcphub/servers.json
 
 //npm.pkg.github.com/:_authToken=COLE-SEU-TOKEN-AQUI
 @SUA-ORG-AQUI:registry=https://npm.pkg.github.com/ln
-```
-
-# folders
-```
-ln -s ~/go/src/zsh-cfg/nvim ~/.config/nvim
-```
-
-# binaries
-```bash
-ln bin/obsidian /usr/local/bin/obsidian
-```
-
-# scripts
-```bash
-./crontab.sh
 ```
 
 # to change tmux theme
