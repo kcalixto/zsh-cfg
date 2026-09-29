@@ -6,11 +6,9 @@ return {
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
       { "nvim-treesitter/nvim-treesitter-context" },
-      { "nvim-treesitter/playground" },
-      -- { "OXY2DEV/markview.nvim" },
     },
     config = function()
-      require("nvim-treesitter.configs").setup({
+      require("nvim-treesitter.config").setup({
         ensure_installed = {
           "go",
           "lua",

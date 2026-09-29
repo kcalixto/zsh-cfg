@@ -65,7 +65,7 @@ bindkey '^[[B' history-search-forward
 
 log_debug "Loading custom configs... (50%)"
 
-export ZSH_CFG_HOME="$HOME/go/src/kcalixto/zsh-cfg"
+export ZSH_CFG_HOME="$HOME/go/src/zsh-cfg"
 
 # Load environment and aliases
 [[ -f "$ZSH_CFG_HOME/env.sh" ]] && source "$ZSH_CFG_HOME/env.sh"

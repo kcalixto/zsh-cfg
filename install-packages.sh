@@ -10,8 +10,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 && sleep 5 \
 
-&& /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
-    && echo -e "\n $CHECK homebrew installed!"
+&& /bin/bash -c "$(sudo apt update)" \
+    && echo -e "\n $CHECK apt updated!"
 
 base_folder="./packages-install"
 find "$base_folder" -type f -name "*.sh" | while read -r script; do
