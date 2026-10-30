@@ -25,6 +25,7 @@ return {
           "vimdoc",
           "query",
           "markdown_inline",
+          "yaml",
         },
         indent = { enable = true },
         auto_install = true,
