@@ -53,3 +53,8 @@ gs() {
     <(git diff --color --stat=$(($(tput cols) - 3)) HEAD | sed '$d; s/^ //')\
     <(git -c color.status=always status -sb)
 }
+
+gitlogin() {
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/github.pem
+}
